@@ -7,8 +7,8 @@
 package erguotou
 
 import (
-	"github.com/dollarkillerx/erguotou/fasthttprouter"
 	"github.com/dollarkillerx/erguotou/fasthttp"
+	"github.com/dollarkillerx/erguotou/fasthttprouter"
 )
 
 type Engine struct {
@@ -18,12 +18,12 @@ type Engine struct {
 
 func New() *Engine {
 	eng := &Engine{
-		RouterGroup:RouterGroup{
-			Handlers:nil,
-			root:true,
-			basePath:"/",
+		RouterGroup: RouterGroup{
+			Handlers: nil,
+			root:     true,
+			basePath: "/",
 		},
-		fsroot:fasthttprouter.New(),
+		fsroot: fasthttprouter.New(),
 	}
 	eng.RouterGroup.engine = eng
 	return eng

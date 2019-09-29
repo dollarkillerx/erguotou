@@ -11,7 +11,7 @@ const DefaultMultipartMemory = 32 << 20 // 32 MB
 
 // 网页定义
 var (
-	Default404Body   = "404 page not found"
-	Default405Body   = []byte("405 method not allowed")
+	Default404Body = "404 page not found"
+	Default405Body = []byte("405 method not allowed")
 	//defaultAppEngine bool
 )

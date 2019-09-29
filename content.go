@@ -18,7 +18,7 @@ type Context struct {
 }
 
 // 处理函数
-type HandlerFunc func(*Context)
+type HandlerFunc func(ctx *Context)
 
 // HandlersChain defines a HandlerFunc array.
 type HandlersChain []HandlerFunc
@@ -29,4 +29,38 @@ func (c *Context) Next() {
 	if c.index <= len(c.handlers) {
 		c.handlers[c.index-1](c)
 	}
+}
+
+func (c *Context) String(code int,msg string) {
+	c.Ctx.SetStatusCode(code)
+	c.Ctx.WriteString(msg)
+}
+
+func (c *Context) Value(val string) (interface{},bool) {
+	value := c.Ctx.UserValue(val)
+	if value == nil {
+		return nil,false
+	}
+
+	return value,true
+}
+
+func (c *Context) ValueString(val string) (string,bool) {
+	value := c.Ctx.UserValue(val)
+	if value == nil {
+		return "",false
+	}
+
+	s,ok := value.(string)
+	return s,ok
+}
+
+func (c *Context) ValueInt(val string) (int,bool) {
+	value := c.Ctx.UserValue(val)
+	if value == nil {
+		return 0,false
+	}
+
+	s,ok := value.(int)
+	return s,ok
 }

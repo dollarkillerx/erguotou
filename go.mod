@@ -6,4 +6,5 @@ require (
 	github.com/klauspost/compress v1.8.4
 	github.com/klauspost/cpuid v1.2.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0
+	github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a
 )

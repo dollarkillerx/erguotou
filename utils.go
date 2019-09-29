@@ -23,5 +23,3 @@ func HttpSplice(h1, h2 string) string {
 
 	return u
 }
-
-

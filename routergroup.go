@@ -22,6 +22,18 @@ func (r *RouterGroup) Use(middleware ...HandlerFunc) {
 	r.Handlers = append(r.Handlers, middleware...)
 }
 
+// 注册组路由
+func (r *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
+	heads := append(r.Handlers, handlers...)
+
+	return &RouterGroup{
+		Handlers: heads,
+		basePath: HttpSplice(r.basePath, relativePath),
+		engine:   r.engine,
+		root:     false,
+	}
+}
+
 func (r *RouterGroup) Get(relativePath string, handlers ...HandlerFunc) {
 	url := HttpSplice(r.basePath, relativePath)
 	handle := append(r.Handlers, handlers...)
