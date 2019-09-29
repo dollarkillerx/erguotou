@@ -9,6 +9,7 @@ package erguotou
 import (
 	"github.com/dollarkillerx/erguotou/fasthttp"
 	"github.com/dollarkillerx/erguotou/fasthttprouter"
+	"log"
 )
 
 type Engine struct {
@@ -35,6 +36,16 @@ func (e *Engine) Run(options ...Option) error {
 	for _, k := range options {
 		k(&option)
 	}
+	url := "http://"
+
+	if string(option.Host[0]) == ":" {
+		url += url + "0.0.0.0" + option.Host
+	} else {
+		url += url + option.Host
+	}
+	log.Println("Server Run " + url)
+
 	err := fasthttp.ListenAndServe(option.Host, e.fsroot.Handler)
+
 	return err
 }

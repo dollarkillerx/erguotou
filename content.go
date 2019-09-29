@@ -7,6 +7,7 @@
 package erguotou
 
 import (
+	"github.com/dollarkillerx/erguotou/clog"
 	"github.com/dollarkillerx/erguotou/fasthttp"
 )
 
@@ -14,7 +15,7 @@ type Context struct {
 	Ctx      *fasthttp.RequestCtx // ctx
 	index    int                  // 中间件计数器
 	engine   *Engine
-	handlers HandlersChain // 处理函数slice
+	handlers HandlersChain        // 处理函数slice
 }
 
 // 处理函数
@@ -34,6 +35,17 @@ func (c *Context) Next() {
 func (c *Context) String(code int,msg string) {
 	c.Ctx.SetStatusCode(code)
 	c.Ctx.WriteString(msg)
+}
+
+func (c *Context) Json(code int,msg interface{}) {
+	c.Ctx.SetStatusCode(code)
+	c.Ctx.SetContentType("application/json")
+	bytes, e := Jsonp.Marshal(msg)
+	if e != nil {
+		clog.PrintWa(e)
+		return
+	}
+	c.Ctx.Write(bytes)
 }
 
 func (c *Context) Value(val string) (interface{},bool) {
