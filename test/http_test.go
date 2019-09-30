@@ -23,13 +23,13 @@ func TestHttp(t *testing.T) {
 	}
 }
 
-
+// 测试路由分组&中间件
 func TestErguotou(t *testing.T) {
 	engine := erguotou.New()
-	
+
 	engine.Use(func(ctx *erguotou.Context) {
 		log.Println("1")
-		ctx.Next()   // 执行下一级   反之不执行  哈哈哈
+		ctx.Next() // 执行下一级   反之不执行  哈哈哈
 	})
 
 	engine.Get("/hello/:name", func(ctx *erguotou.Context) {
@@ -38,14 +38,14 @@ func TestErguotou(t *testing.T) {
 			log.Println(value)
 		}
 		ctx.Next()
-	},func(ctx *erguotou.Context) {
-		ctx.String(200,"hello")
+	}, func(ctx *erguotou.Context) {
+		ctx.String(200, "hello")
 	})
 
 	cpp := engine.Group("/cpp")
 	{
 		cpp.Get("/hh", func(ctx *erguotou.Context) {
-			ctx.String(200,"我是你大爷")
+			ctx.String(200, "我是你大爷")
 		})
 	}
 
@@ -54,3 +54,38 @@ func TestErguotou(t *testing.T) {
 		panic(err)
 	}
 }
+
+type user struct {
+	Name string `json:"name" `
+	Password string `json:"password" `
+}
+
+// 测试参数绑定
+func TestBandJson(t *testing.T) {
+	app := erguotou.New()
+
+	data := user{}
+	app.Post("/testjson", func(ctx *erguotou.Context) {
+		value := ctx.BandValue(&data)
+		if value != nil {
+			panic(value)
+		}
+
+		ctx.Json(200,data)
+	})
+
+	app.Get("/testjson", func(ctx *erguotou.Context) {
+		value := ctx.BandValue(&data)
+		if value != nil {
+			panic(value)
+		}
+
+		log.Println(data)
+	})
+
+	err := app.Run(erguotou.SetHost(":8082"))
+	if err != nil {
+		panic(err)
+	}
+}
+

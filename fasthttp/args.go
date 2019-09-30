@@ -50,6 +50,22 @@ type Args struct {
 	buf  []byte
 }
 
+// 转换为通用处理
+//func (a *Args) Zh() map[string][]string {
+//	data := make(map[string][]string)
+//	for _, k := range a.args {
+//		for i, v := range k.key {
+//			if !k.noValue {
+//				clog.Println(string(v))
+//				clog.PrintEr(string(k.value[i]))
+//				s := string(k.value[i])
+//				data[string(v)] = strings.Split(s, ",")
+//			}
+//		}
+//	}
+//	return data
+//}
+
 type argsKV struct {
 	key     []byte
 	value   []byte
