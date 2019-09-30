@@ -39,9 +39,9 @@ func (e *Engine) Run(options ...Option) error {
 	url := "http://"
 
 	if string(option.Host[0]) == ":" {
-		url += url + "0.0.0.0" + option.Host
+		url += "0.0.0.0" + option.Host
 	} else {
-		url += url + option.Host
+		url += option.Host
 	}
 	log.Println("Server Run " + url)
 
@@ -55,7 +55,7 @@ func (e *Engine) Status(path, dir string) {
 	u := string(path[len(path)-1])
 	if u == "/" {
 		path = path + "*filepath"
-	}else {
+	} else {
 		path = path + "/*filepath"
 	}
 	e.engine.fsroot.ServeFiles(path, dir)

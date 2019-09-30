@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	data := fmt.Sprintf("%c[1;31;40m%c[0m %v", 0x1B, 0x1B, "Ergoutou 二锅头 初始化完毕")
+	data := fmt.Sprintf("%v", "Ergoutou 二锅头 初始化完毕")
 
 	log.Println(data)
 }

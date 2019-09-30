@@ -28,6 +28,8 @@ func SetHost(host string) Option {
 }
 
 // 设置debug
-func SetDebug(debug bool) {
+func SetDebug(debug bool) Option {
 	erguotou_debug = debug
+	return func(options *Options) {
+	}
 }
