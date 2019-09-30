@@ -10,8 +10,22 @@ import (
 	"log"
 )
 
-func Logger(ctx *Context)  {
+func Logger(ctx *Context) {
 	path := ctx.Ctx.Path()
 
-	log.Println(string(path))
+	head := ""
+
+	switch {
+	case ctx.Ctx.IsGet():
+		head = "Get: "
+	case ctx.Ctx.IsPost():
+		head = "Post: "
+	case ctx.Ctx.IsDelete():
+		head = "Delete: "
+	case ctx.Ctx.IsPut():
+		head = "Put: "
+	}
+
+	log.Println(head + string(path))
+	ctx.Next()
 }

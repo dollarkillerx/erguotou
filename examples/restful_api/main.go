@@ -12,31 +12,31 @@ func main() {
 	app := erguotou.New()
 
 	app.Get("/", func(ctx *erguotou.Context) {
-		ctx.String(200,"hello erguotou")
+		ctx.String(200, "hello erguotou")
 	})
 
 	app.Post("/", func(ctx *erguotou.Context) {
-		ctx.String(200,"hello erguotou")
+		ctx.String(200, "hello erguotou")
 	})
 
 	app.Delete("/", func(ctx *erguotou.Context) {
-		ctx.String(200,"hello erguotou")
+		ctx.String(200, "hello erguotou")
 	})
 
 	app.Put("/", func(ctx *erguotou.Context) {
-		ctx.String(200,"hello erguotou")
+		ctx.String(200, "hello erguotou")
 	})
 
 	app.Head("/", func(ctx *erguotou.Context) {
-		ctx.String(200,"hello erguotou")
+		ctx.String(200, "hello erguotou")
 	})
 
 	app.Options("/", func(ctx *erguotou.Context) {
-		ctx.String(200,"hello erguotou")
+		ctx.String(200, "hello erguotou")
 	})
 
 	app.Patch("/", func(ctx *erguotou.Context) {
-		ctx.String(200,"hello erguotou")
+		ctx.String(200, "hello erguotou")
 	})
 
 	err := app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(false))

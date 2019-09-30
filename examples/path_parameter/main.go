@@ -14,7 +14,7 @@ func main() {
 	app.Get("/hello/:hello", func(ctx *erguotou.Context) {
 		value, b := ctx.PathValueString("hello")
 		if b {
-			ctx.String(200,value)
+			ctx.String(200, value)
 		}
 	})
 

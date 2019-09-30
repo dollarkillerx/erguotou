@@ -14,13 +14,13 @@ func main() {
 	app.Get("/hello", func(ctx *erguotou.Context) {
 		val := ctx.PostVal("hello")
 
-		ctx.Write(200,val)
+		ctx.Write(200, val)
 	})
 
 	app.Post("/hello", func(ctx *erguotou.Context) {
 		body := ctx.Body()
 
-		ctx.Write(200,body)
+		ctx.Write(200, body)
 	})
 
 	err := app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(false))
@@ -28,4 +28,3 @@ func main() {
 		panic(err)
 	}
 }
-

@@ -16,7 +16,7 @@ func main() {
 
 	// 注册路由
 	app.Get("/hello", func(ctx *erguotou.Context) {
-		ctx.String(200,"hello erguotou")
+		ctx.String(200, "hello erguotou")
 	})
 
 	err := app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(false))

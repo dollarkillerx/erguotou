@@ -30,7 +30,7 @@ func (c *Context) Next() {
 	c.index += 1
 	if c.index <= len(c.handlers) {
 		c.handlers[c.index-1](c)
-	}else {
+	} else {
 		c.index = 1
 		c.handlers[c.index-1](c)
 	}
@@ -132,5 +132,3 @@ func (c *Context) Body() []byte {
 func (c *Context) FormFile(file string) (*multipart.FileHeader, error) {
 	return c.Ctx.FormFile(file)
 }
-
-

@@ -56,7 +56,7 @@ func TestErguotou(t *testing.T) {
 }
 
 type user struct {
-	Name string `json:"name" `
+	Name     string `json:"name" `
 	Password string `json:"password" `
 }
 
@@ -71,7 +71,7 @@ func TestBandJson(t *testing.T) {
 			panic(value)
 		}
 
-		ctx.Json(200,data)
+		ctx.Json(200, data)
 	})
 
 	app.Get("/testjson", func(ctx *erguotou.Context) {
@@ -93,7 +93,7 @@ func TestBandJson(t *testing.T) {
 func TestFileServe(t *testing.T) {
 	app := erguotou.New()
 
-	app.Status("/hello",".")
+	app.Status("/hello", ".")
 
 	err := app.Run(erguotou.SetHost(":8082"))
 	if err != nil {

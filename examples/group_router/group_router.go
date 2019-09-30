@@ -14,11 +14,11 @@ func main() {
 	api := app.Group("/api")
 	{
 		api.Get("/hello", func(ctx *erguotou.Context) {
-			ctx.String(200,"hello")
+			ctx.String(200, "hello")
 		})
 
 		api.Get("/ppc", func(ctx *erguotou.Context) {
-			ctx.String(200,"ppc")
+			ctx.String(200, "ppc")
 		})
 	}
 

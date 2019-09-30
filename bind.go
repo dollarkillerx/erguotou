@@ -112,7 +112,7 @@ func mapForm(ptr interface{}, form *fasthttp.Args) error {
 		}
 
 		// 获取 form中元素
-		inputValue:= string(form.Peek(inputFieldName))
+		inputValue := string(form.Peek(inputFieldName))
 		//clog.Println(inputFieldName)
 		//clog.Println(inputValue)
 		if inputValue == "" {

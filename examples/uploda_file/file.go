@@ -18,7 +18,7 @@ func main() {
 		// FormFile 读取文件
 		header, e := ctx.FormFile("file")
 		if e != nil {
-			ctx.String(400,"")
+			ctx.String(400, "")
 		}
 		file, e := header.Open()
 		if header != nil {

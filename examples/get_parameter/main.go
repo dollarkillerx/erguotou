@@ -14,7 +14,7 @@ func main() {
 	app.Get("/hello", func(ctx *erguotou.Context) {
 		val := ctx.GetVal("hello")
 
-		ctx.Write(200,val)
+		ctx.Write(200, val)
 	})
 
 	err := app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(false))
