@@ -126,7 +126,8 @@ func (c *Context) Body() []byte {
 }
 
 // 接受文件
-func (c *Context) FormFile(file string) (*multipart.FileHeader,error) {
+func (c *Context) FormFile(file string) (*multipart.FileHeader, error) {
 	return c.Ctx.FormFile(file)
 }
+
 

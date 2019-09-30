@@ -33,7 +33,7 @@ func TestErguotou(t *testing.T) {
 	})
 
 	engine.Get("/hello/:name", func(ctx *erguotou.Context) {
-		value, b := ctx.Value("name")
+		value, b := ctx.PathValue("name")
 		if b {
 			log.Println(value)
 		}
@@ -89,3 +89,14 @@ func TestBandJson(t *testing.T) {
 	}
 }
 
+// 测试文件服务器
+func TestFileServe(t *testing.T) {
+	app := erguotou.New()
+
+	app.Status("/hello",".")
+
+	err := app.Run(erguotou.SetHost(":8082"))
+	if err != nil {
+		panic(err)
+	}
+}

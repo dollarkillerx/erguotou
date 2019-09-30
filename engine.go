@@ -49,3 +49,14 @@ func (e *Engine) Run(options ...Option) error {
 
 	return err
 }
+
+// 文件服务器
+func (e *Engine) Status(path, dir string) {
+	u := string(path[len(path)-1])
+	if u == "/" {
+		path = path + "*filepath"
+	}else {
+		path = path + "/*filepath"
+	}
+	e.engine.fsroot.ServeFiles(path, dir)
+}
