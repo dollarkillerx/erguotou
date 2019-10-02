@@ -11,10 +11,11 @@ import (
 	"github.com/dollarkillerx/erguotou/fasthttprouter"
 	"html/template"
 	"log"
+	"sync"
 )
 
 var (
-	HtmlGlob *template.Template
+	HtmlPool *sync.Pool
 )
 
 type Engine struct {
@@ -68,17 +69,14 @@ func (e *Engine) Status(path, dir string) {
 
 // 注册模板  ("templates/**/*")
 func (e *Engine) LoadHTMLPath(path string) {
-	var err error
-	HtmlGlob,err = template.ParseGlob(path)
-	if err != nil {
-		log.Fatal(err)
+	HtmlPool = &sync.Pool{
+		New: func() interface{} {
+			HtmlGlob,err := template.ParseGlob(path)
+			if err != nil {
+				log.Fatal(err)
+			}
+			return HtmlGlob
+		},
 	}
 
-	// 打印模板
-	for _,k := range HtmlGlob.Templates() {
-		tplname := k.Name()
-		log.Println("注册模板: " + tplname)
-	}
-
-	log.Println("模板注册完毕!")
 }

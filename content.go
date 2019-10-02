@@ -10,6 +10,7 @@ import "C"
 import (
 	"github.com/dollarkillerx/erguotou/clog"
 	"github.com/dollarkillerx/erguotou/fasthttp"
+	"html/template"
 	"mime/multipart"
 	"sync"
 )
@@ -140,10 +141,15 @@ func (c *Context) FormFile(file string) (*multipart.FileHeader, error) {
 func (c *Context) HTML(code int, tplName string) {
 	c.Ctx.SetStatusCode(code)
 	c.Ctx.SetContentType("text/html")
-	if HtmlGlob == nil {
-		clog.PrintWa(HtmlGlob)
-		panic("模板未注册！！！")
-	}
+	//if HtmlGlob == nil {
+	//	clog.PrintWa(HtmlGlob)
+	//	panic("模板未注册！！！")
+	//}
+
+	HtmlGlob := HtmlPool.Get().(*template.Template)
+	defer func() {
+		HtmlPool.Put(HtmlGlob)
+	}()
 
 	data := make(map[string]interface{})
 	c.data.Range(func(key, value interface{}) bool {
