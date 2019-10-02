@@ -280,6 +280,24 @@ Running 30s test @ http://0.0.0.0:8081/hello
 Requests/sec:  89752.96
 Transfer/sec:     11.61MB
 ```
+
+``` 
+➜  Test wrk -t12 -c400 -d30s --latency http://0.0.0.0:8081/hello
+Running 30s test @ http://0.0.0.0:8081/hello
+  12 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     2.89ms    1.90ms 126.43ms   96.70%
+    Req/Sec     7.16k     4.39k   13.00k    46.44%
+  Latency Distribution
+     50%    2.73ms
+     75%    2.96ms
+     90%    3.35ms
+     99%    8.07ms
+  2571271 requests in 30.10s, 333.30MB read
+  Socket errors: connect 155, read 74, write 0, timeout 0
+Requests/sec:  85414.79
+Transfer/sec:     11.07MB
+```
 - gin
 ``` 
 ➜  Test wrk -t12 -c400 -d30s http://0.0.0.0:8082/hello
@@ -293,6 +311,25 @@ Running 30s test @ http://0.0.0.0:8082/hello
 Requests/sec:  63282.30
 Transfer/sec:      7.24MB
 ```
+
+``` 
+➜  Test wrk -t12 -c400 -d30s --latency http://0.0.0.0:8082/hello
+Running 30s test @ http://0.0.0.0:8082/hello
+  12 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     5.24ms   26.01ms   1.02s    99.53%
+    Req/Sec     5.32k     3.47k   12.66k    53.40%
+  Latency Distribution
+     50%    3.42ms
+     75%    4.18ms
+     90%    5.41ms
+     99%   17.25ms
+  1901550 requests in 30.07s, 217.62MB read
+  Socket errors: connect 155, read 59, write 0, timeout 0
+Requests/sec:  63238.53
+Transfer/sec:      7.24MB
+```
+
 - erguotou html
 ``` 
 ➜  Test wrk -t12 -c400 -d30s http://0.0.0.0:8081
@@ -305,6 +342,24 @@ Running 30s test @ http://0.0.0.0:8081
   Socket errors: connect 155, read 74, write 0, timeout 0
 Requests/sec:  86101.85
 Transfer/sec:     20.01MB
+```
+
+``` 
+➜  Test wrk -t12 -c400 -d30s --latency http://0.0.0.0:8081
+Running 30s test @ http://0.0.0.0:8081
+  12 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.59ms    7.57ms 379.71ms   97.07%
+    Req/Sec     6.66k     3.71k   25.85k    58.88%
+  Latency Distribution
+     50%    2.54ms
+     75%    3.40ms
+     90%    5.32ms
+     99%   21.32ms
+  2386531 requests in 30.10s, 554.21MB read
+  Socket errors: connect 155, read 71, write 0, timeout 0
+Requests/sec:  79282.28
+Transfer/sec:     18.41MB
 ```
 - gin html
 ``` 
@@ -319,6 +374,25 @@ Running 30s test @ http://0.0.0.0:8082
 Requests/sec:  10311.24
 Transfer/sec:      2.42MB
 ```
+
+``` 
+➜  Test wrk -t12 -c400 -d30s --latency http://0.0.0.0:8082
+Running 30s test @ http://0.0.0.0:8082
+  12 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    22.08ms   13.85ms 534.41ms   98.69%
+    Req/Sec     0.92k   450.04     1.97k    53.33%
+  Latency Distribution
+     50%   21.20ms
+     75%   22.91ms
+     90%   24.87ms
+     99%   36.05ms
+  329183 requests in 30.05s, 77.23MB read
+  Socket errors: connect 155, read 180, write 0, timeout 0
+Requests/sec:  10955.90
+Transfer/sec:      2.57MB
+```
+
 - 测试环境
 ```
 MacBook Pro (Retina, 15-inch, Mid 2015)
