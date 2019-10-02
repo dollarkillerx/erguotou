@@ -6,7 +6,10 @@
  */
 package erguotou
 
-import "github.com/dollarkillerx/erguotou/fasthttp"
+import (
+	"github.com/dollarkillerx/erguotou/fasthttp"
+	"log"
+)
 
 // RouterGroup is used internally to configure router, a RouterGroup is associated with
 // a prefix and an array of handlers (middleware).
@@ -86,36 +89,85 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 	switch httpMethod {
 	case "POST":
 		r.engine.fsroot.POST(relativePath, func(ctxF *fasthttp.RequestCtx) {
+			defer func() {
+				if re :=recover();re != nil {
+					ctx.Ctx.SetStatusCode(500)
+					log.Println(re)
+					ctx.Ctx.WriteString("server error")
+				}
+			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "GET":
 		r.engine.fsroot.GET(relativePath, func(ctxF *fasthttp.RequestCtx) {
+			defer func() {
+				if re :=recover();re != nil {
+					ctx.Ctx.SetStatusCode(500)
+					log.Println(re)
+					ctx.Ctx.WriteString("server error")
+				}
+			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "DELETE":
 		r.engine.fsroot.DELETE(relativePath, func(ctxF *fasthttp.RequestCtx) {
+			defer func() {
+				if re :=recover();re != nil {
+					ctx.Ctx.SetStatusCode(500)
+					log.Println(re)
+					ctx.Ctx.WriteString("server error")
+				}
+			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "PUT":
 		r.engine.fsroot.PUT(relativePath, func(ctxF *fasthttp.RequestCtx) {
+			defer func() {
+				if re :=recover();re != nil {
+					ctx.Ctx.SetStatusCode(500)
+					log.Println(re)
+					ctx.Ctx.WriteString("server error")
+				}
+			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "PATCH":
 		r.engine.fsroot.PATCH(relativePath, func(ctxF *fasthttp.RequestCtx) {
+			defer func() {
+				if re :=recover();re != nil {
+					ctx.Ctx.SetStatusCode(500)
+					log.Println(re)
+					ctx.Ctx.WriteString("server error")
+				}
+			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "HEAD":
 		r.engine.fsroot.HEAD(relativePath, func(ctxF *fasthttp.RequestCtx) {
+			defer func() {
+				if re :=recover();re != nil {
+					ctx.Ctx.SetStatusCode(500)
+					log.Println(re)
+					ctx.Ctx.WriteString("server error")
+				}
+			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "OPTIONS":
 		r.engine.fsroot.OPTIONS(relativePath, func(ctxF *fasthttp.RequestCtx) {
+			defer func() {
+				if re :=recover();re != nil {
+					ctx.Ctx.SetStatusCode(500)
+					log.Println(re)
+					ctx.Ctx.WriteString("server error")
+				}
+			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
