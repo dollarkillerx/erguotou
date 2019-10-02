@@ -20,7 +20,7 @@ func main() {
 
 	app.Get("/", testhtml)
 
-	app.Run(erguotou.SetHost(":8081"))
+	app.Run(erguotou.SetHost(":8081"),erguotou.SetDebug(true))
 }
 
 

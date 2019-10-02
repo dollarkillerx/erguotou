@@ -15,8 +15,9 @@ import (
 )
 
 var (
-	HtmlPool *ObjPoll
+	HtmlPool      *ObjPoll
 	HtmlTemporary *sync.Pool
+	Path          string
 )
 
 type Engine struct {
@@ -51,6 +52,7 @@ func (e *Engine) Run(options ...Option) error {
 		url += option.Host
 	}
 	log.Println("Server Run " + url)
+	log.Printf("Debug: %v", erguotou_debug)
 
 	err := fasthttp.ListenAndServe(option.Host, e.fsroot.Handler)
 
@@ -70,6 +72,7 @@ func (e *Engine) Status(path, dir string) {
 
 // 注册模板  ("templates/**/*")
 func (e *Engine) LoadHTMLPath(path string) {
+	Path = path
 	HtmlPool = NewObjPoll(func() interface{} {
 		HtmlGlob, err := template.ParseGlob(path)
 		if err != nil {
@@ -90,4 +93,13 @@ func (e *Engine) LoadHTMLPath(path string) {
 	}
 
 	log.Println("Html模板加载完毕")
+}
+
+// 开发默认html热加载
+func (e *Engine) LoadHTMLDebug() *template.Template {
+	HtmlGlob, err := template.ParseGlob(Path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return HtmlGlob
 }

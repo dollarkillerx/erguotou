@@ -142,26 +142,26 @@ func (c *Context) FormFile(file string) (*multipart.FileHeader, error) {
 func (c *Context) HTML(code int, tplName string) {
 	c.Ctx.SetStatusCode(code)
 	c.Ctx.SetContentType("text/html")
-	//if HtmlGlob == nil {
-	//	clog.PrintWa(HtmlGlob)
-	//	panic("模板未注册！！！")
-	//}
-
 	var HtmlGlob *template.Template
-	obj, e := HtmlPool.GetObj(15 * time.Millisecond)
-	if e != nil {
-		// 如果超时就从临时对象池内获取
-		HtmlGlob = HtmlTemporary.Get().(*template.Template)
-		defer func() {
-			HtmlTemporary.Put(HtmlGlob)
-		}()
-	}else {
-		HtmlGlob = obj.(*template.Template)
-		defer func() {
-			HtmlPool.Release(HtmlGlob)
-		}()
-	}
 
+	if erguotou_debug {
+		HtmlGlob = c.engine.LoadHTMLDebug()
+	}else {
+		obj, e := HtmlPool.GetObj(15 * time.Millisecond)
+		if e != nil {
+			// 如果超时就从临时对象池内获取
+			HtmlGlob = HtmlTemporary.Get().(*template.Template)
+			defer func() {
+				HtmlTemporary.Put(HtmlGlob)
+			}()
+		} else {
+			HtmlGlob = obj.(*template.Template)
+			defer func() {
+				HtmlPool.Release(HtmlGlob)
+			}()
+		}
+
+	}
 
 
 	data := make(map[string]interface{})
