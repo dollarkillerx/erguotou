@@ -9,7 +9,12 @@ package erguotou
 import (
 	"github.com/dollarkillerx/erguotou/fasthttp"
 	"github.com/dollarkillerx/erguotou/fasthttprouter"
+	"html/template"
 	"log"
+)
+
+var (
+	HtmlGlob *template.Template
 )
 
 type Engine struct {
@@ -59,4 +64,21 @@ func (e *Engine) Status(path, dir string) {
 		path = path + "/*filepath"
 	}
 	e.engine.fsroot.ServeFiles(path, dir)
+}
+
+// 注册模板  ("templates/**/*")
+func (e *Engine) LoadHTMLPath(path string) {
+	var err error
+	HtmlGlob,err = template.ParseGlob(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 打印模板
+	for _,k := range HtmlGlob.Templates() {
+		tplname := k.Name()
+		log.Println("注册模板: " + tplname)
+	}
+
+	log.Println("模板注册完毕!")
 }

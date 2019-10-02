@@ -16,6 +16,7 @@ erguotou 二锅头 基于fasthttp的轻量级web框架
     - [路由分组](#路由分组)
     - [使用中间件](#使用中间件)
     - [文件服务器](#文件服务器)
+    - [HTML渲染](#HTML渲染)
 ### 安装
 ``` 
 go get github.com/dollarkillerx/erguotou
@@ -236,5 +237,29 @@ func TestFileServe(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+}
+```
+
+### HTML渲染
+``` 
+func main() {
+	app := erguotou.New()
+
+	app.Use(erguotou.Logger)
+
+	// 注册html
+	app.LoadHTMLPath("examples/html/view/**/*")
+
+	app.Get("/", testhtml)
+
+	app.Run(erguotou.SetHost(":8081"))
+}
+
+
+func testhtml(ctx *erguotou.Context) {
+
+	ctx.Data("Ok","this is ok!")
+
+	ctx.HTML(200,"/user/hello.html")
 }
 ```

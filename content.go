@@ -6,16 +6,19 @@
  */
 package erguotou
 
+import "C"
 import (
 	"github.com/dollarkillerx/erguotou/clog"
 	"github.com/dollarkillerx/erguotou/fasthttp"
 	"mime/multipart"
+	"sync"
 )
 
 type Context struct {
 	Ctx      *fasthttp.RequestCtx // ctx
 	index    int                  // 中间件计数器
 	engine   *Engine
+	data     sync.Map
 	handlers HandlersChain // 处理函数slice
 }
 
@@ -131,4 +134,28 @@ func (c *Context) Body() []byte {
 // 接受文件
 func (c *Context) FormFile(file string) (*multipart.FileHeader, error) {
 	return c.Ctx.FormFile(file)
+}
+
+// 渲染 html
+func (c *Context) HTML(code int, tplName string) {
+	c.Ctx.SetStatusCode(code)
+	c.Ctx.SetContentType("text/html")
+	if HtmlGlob == nil {
+		clog.PrintWa(HtmlGlob)
+		panic("模板未注册！！！")
+	}
+
+	data := make(map[string]interface{})
+	c.data.Range(func(key, value interface{}) bool {
+		s := key.(string)
+
+		data[s] = value
+		return true
+	})
+
+	HtmlGlob.ExecuteTemplate(c.Ctx, tplName,data)
+}
+
+func (c *Context) Data(key string, data interface{}) {
+	c.data.Store(key,data)
 }

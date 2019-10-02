@@ -15,3 +15,5 @@ var (
 	Default405Body = []byte("405 method not allowed")
 	//defaultAppEngine bool
 )
+
+//type Datas map[string]interface{}
