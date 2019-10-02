@@ -45,7 +45,7 @@ func TestErguotou(t *testing.T) {
 	cpp := engine.Group("/cpp")
 	{
 		cpp.Get("/hh", func(ctx *erguotou.Context) {
-			ctx.String(200, "我是你大爷")
+			panic("err")
 		})
 	}
 
