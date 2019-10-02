@@ -345,21 +345,22 @@ Transfer/sec:     20.01MB
 ```
 
 ``` 
-➜  Test wrk -t12 -c400 -d30s --latency http://0.0.0.0:8081
+➜  Test wrk -t12 -c400 -d30s --latency http://0.0.0.0:8081      
 Running 30s test @ http://0.0.0.0:8081
   12 threads and 400 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     3.59ms    7.57ms 379.71ms   97.07%
-    Req/Sec     6.66k     3.71k   25.85k    58.88%
+    Latency     3.14ms    7.33ms 355.55ms   98.36%
+    Req/Sec     7.92k     4.08k   16.39k    56.52%
   Latency Distribution
-     50%    2.54ms
-     75%    3.40ms
-     90%    5.32ms
-     99%   21.32ms
-  2386531 requests in 30.10s, 554.21MB read
-  Socket errors: connect 155, read 71, write 0, timeout 0
-Requests/sec:  79282.28
-Transfer/sec:     18.41MB
+     50%    2.31ms
+     75%    3.13ms
+     90%    4.89ms
+     99%   12.44ms
+  2607365 requests in 30.10s, 605.77MB read
+  Socket errors: connect 155, read 67, write 0, timeout 0
+  Non-2xx or 3xx responses: 1
+Requests/sec:  86617.57
+Transfer/sec:     20.12MB
 ```
 - gin html
 ``` 
