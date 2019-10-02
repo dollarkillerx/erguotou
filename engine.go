@@ -15,7 +15,8 @@ import (
 )
 
 var (
-	HtmlPool *sync.Pool
+	HtmlPool *ObjPoll
+	HtmlTemporary *sync.Pool
 )
 
 type Engine struct {
@@ -69,9 +70,18 @@ func (e *Engine) Status(path, dir string) {
 
 // 注册模板  ("templates/**/*")
 func (e *Engine) LoadHTMLPath(path string) {
-	HtmlPool = &sync.Pool{
+	HtmlPool = NewObjPoll(func() interface{} {
+		HtmlGlob, err := template.ParseGlob(path)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return HtmlGlob
+	}, 5)
+
+	// 创建备用临时对象池
+	HtmlTemporary = &sync.Pool{
 		New: func() interface{} {
-			HtmlGlob,err := template.ParseGlob(path)
+			HtmlGlob, err := template.ParseGlob(path)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -79,4 +89,5 @@ func (e *Engine) LoadHTMLPath(path string) {
 		},
 	}
 
+	log.Println("Html模板加载完毕")
 }

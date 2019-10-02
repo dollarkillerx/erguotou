@@ -13,6 +13,7 @@ import (
 	"html/template"
 	"mime/multipart"
 	"sync"
+	"time"
 )
 
 type Context struct {
@@ -146,10 +147,22 @@ func (c *Context) HTML(code int, tplName string) {
 	//	panic("模板未注册！！！")
 	//}
 
-	HtmlGlob := HtmlPool.Get().(*template.Template)
-	defer func() {
-		HtmlPool.Put(HtmlGlob)
-	}()
+	var HtmlGlob *template.Template
+	obj, e := HtmlPool.GetObj(15 * time.Millisecond)
+	if e != nil {
+		// 如果超时就从临时对象池内获取
+		HtmlGlob = HtmlTemporary.Get().(*template.Template)
+		defer func() {
+			HtmlTemporary.Put(HtmlGlob)
+		}()
+	}else {
+		HtmlGlob = obj.(*template.Template)
+		defer func() {
+			HtmlPool.Release(HtmlGlob)
+		}()
+	}
+
+
 
 	data := make(map[string]interface{})
 	c.data.Range(func(key, value interface{}) bool {

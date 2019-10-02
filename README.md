@@ -332,35 +332,34 @@ Transfer/sec:      7.24MB
 
 - erguotou html
 ``` 
-➜  Test wrk -t12 -c400 -d30s http://0.0.0.0:8081
+➜  Test wrk -t12 -c400 -d30s http://0.0.0.0:8081 
 Running 30s test @ http://0.0.0.0:8081
   12 threads and 400 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     3.25ms    8.40ms 404.41ms   98.48%
-    Req/Sec     9.64k     4.29k   34.86k    77.26%
-  2591623 requests in 30.10s, 602.23MB read
-  Socket errors: connect 155, read 74, write 0, timeout 0
-Requests/sec:  86101.85
-Transfer/sec:     20.01MB
+    Latency     3.81ms    5.23ms 137.54ms   93.37%
+    Req/Sec     7.17k     4.02k   38.17k    64.16%
+  2357265 requests in 30.10s, 544.44MB read
+  Socket errors: connect 155, read 73, write 0, timeout 0
+Requests/sec:  78310.06
+Transfer/sec:     18.09MB
 ```
 
 ``` 
-➜  Test wrk -t12 -c400 -d30s --latency http://0.0.0.0:8081      
+➜  Test wrk -t12 -c400 -d30s --latency http://0.0.0.0:8081
 Running 30s test @ http://0.0.0.0:8081
   12 threads and 400 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency     3.14ms    7.33ms 355.55ms   98.36%
-    Req/Sec     7.92k     4.08k   16.39k    56.52%
+    Latency     4.19ms    5.94ms 148.89ms   94.66%
+    Req/Sec     5.96k     3.51k   26.21k    54.90%
   Latency Distribution
-     50%    2.31ms
-     75%    3.13ms
-     90%    4.89ms
-     99%   12.44ms
-  2607365 requests in 30.10s, 605.77MB read
-  Socket errors: connect 155, read 67, write 0, timeout 0
-  Non-2xx or 3xx responses: 1
-Requests/sec:  86617.57
-Transfer/sec:     20.12MB
+     50%    2.88ms
+     75%    3.55ms
+     90%    5.44ms
+     99%   34.73ms
+  2138257 requests in 30.10s, 493.86MB read
+  Socket errors: connect 155, read 25, write 0, timeout 0
+Requests/sec:  71038.03
+Transfer/sec:     16.41MB
 ```
 - gin html
 ``` 
