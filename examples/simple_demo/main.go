@@ -12,11 +12,11 @@ func main() {
 	app := erguotou.New()
 
 	// 全局基础中间件
-	app.Use(erguotou.Logger)
+	//app.Use(erguotou.Logger)
 
 	// 注册路由
 	app.Get("/hello", func(ctx *erguotou.Context) {
-		ctx.String(200, "hello erguotou")
+		ctx.String(200, "test")
 	})
 
 	err := app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(false))

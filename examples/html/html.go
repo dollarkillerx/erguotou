@@ -13,7 +13,7 @@ import (
 func main() {
 	app := erguotou.New()
 
-	app.Use(erguotou.Logger)
+	//app.Use(erguotou.Logger)
 
 	// 注册html
 	app.LoadHTMLPath("examples/html/view/**/*")
@@ -26,7 +26,7 @@ func main() {
 
 func testhtml(ctx *erguotou.Context) {
 
-	ctx.Data("Ok","this is ok!")
+	ctx.Data("Ok","test")
 
 	ctx.HTML(200,"/user/hello.html")
 }
