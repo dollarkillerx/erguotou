@@ -92,7 +92,14 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
+
+					// 打印错误信息
 					log.Println(re)
+					// 打印堆栈信息
+					utils := Utils{}
+					trace := utils.PanicTrace(2048)
+					log.Println(trace)
+
 					ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -104,7 +111,12 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
+					// 打印错误信息
 					log.Println(re)
+					// 打印堆栈信息
+					utils := Utils{}
+					trace := utils.PanicTrace(2048)
+					log.Println(trace)
 					ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -116,7 +128,12 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
+					// 打印错误信息
 					log.Println(re)
+					// 打印堆栈信息
+					utils := Utils{}
+					trace := utils.PanicTrace(2048)
+					log.Println(trace)
 					ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -128,7 +145,12 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
+					// 打印错误信息
 					log.Println(re)
+					// 打印堆栈信息
+					utils := Utils{}
+					trace := utils.PanicTrace(2048)
+					log.Println(trace)
 					ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -140,7 +162,12 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
+					// 打印错误信息
 					log.Println(re)
+					// 打印堆栈信息
+					utils := Utils{}
+					trace := utils.PanicTrace(2048)
+					log.Println(trace)
 					ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -152,7 +179,12 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
+					// 打印错误信息
 					log.Println(re)
+					// 打印堆栈信息
+					utils := Utils{}
+					trace := utils.PanicTrace(2048)
+					log.Println(trace)
 					ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -164,7 +196,12 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
+					// 打印错误信息
 					log.Println(re)
+					// 打印堆栈信息
+					utils := Utils{}
+					trace := utils.PanicTrace(2048)
+					log.Println(trace)
 					ctx.Ctx.WriteString("server error")
 				}
 			}()
