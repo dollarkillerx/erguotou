@@ -36,7 +36,9 @@ func (c *Context) Next() {
 	if c.index <= len(c.handlers) {
 		c.handlers[c.index-1](c)
 	} else {
+		// 解决复用时数据污染
 		c.index = 1
+		c.data = sync.Map{}
 		c.handlers[c.index-1](c)
 	}
 }
