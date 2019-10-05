@@ -38,7 +38,7 @@ func (c *Context) Next() {
 	} else {
 		// 解决复用时数据污染
 		c.index = 1
-		c.data = sync.Map{}
+		//c.data = sync.Map{}
 		c.handlers[0](c)
 	}
 }

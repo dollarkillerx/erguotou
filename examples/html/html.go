@@ -8,6 +8,8 @@ package main
 
 import (
 	"github.com/dollarkillerx/erguotou"
+	"math/rand"
+	"time"
 )
 
 func main() {
@@ -16,16 +18,20 @@ func main() {
 	//app.Use(erguotou.Logger)
 
 	// 注册html
-	app.LoadHTMLPath("examples/html/view/**/*")
+	app.LoadHTMLPath("examples/html/view/**/*", nil)
 
 	app.Get("/", testhtml)
 
-	app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(true))
+	app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(false))
 }
 
 func testhtml(ctx *erguotou.Context) {
 
-	ctx.Data("Ok", "test")
+	data := []string{"ok", "hello", "pc", "sp", "ppr", "ssr"}
+	rand.Seed(time.Now().UnixNano())
+	intn := rand.Intn(len(data))
+
+	ctx.Data("Ok", data[intn])
 
 	ctx.HTML(200, "/user/hello.html")
 }

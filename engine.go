@@ -18,6 +18,7 @@ var (
 	HtmlPool      *ObjPoll
 	HtmlTemporary *sync.Pool
 	Path          string
+	FuncMap       template.FuncMap
 )
 
 type Engine struct {
@@ -70,25 +71,18 @@ func (e *Engine) Status(path, dir string) {
 	e.engine.fsroot.ServeFiles(path, dir)
 }
 
-// 注册模板  ("templates/**/*")
-func (e *Engine) LoadHTMLPath(path string) {
+// 注册模板  ("templates/**/*"),funcMap
+func (e *Engine) LoadHTMLPath(path string,funcMap template.FuncMap) {
 	Path = path
+	FuncMap = funcMap
 	HtmlPool = NewObjPoll(func() interface{} {
-		HtmlGlob, err := template.ParseGlob(path)
-		if err != nil {
-			log.Fatal(err)
-		}
-		return HtmlGlob
+		return e.LoadHTMLDebug()
 	}, 5)
 
 	// 创建备用临时对象池
 	HtmlTemporary = &sync.Pool{
 		New: func() interface{} {
-			HtmlGlob, err := template.ParseGlob(path)
-			if err != nil {
-				log.Fatal(err)
-			}
-			return HtmlGlob
+			return e.LoadHTMLDebug()
 		},
 	}
 
@@ -97,7 +91,11 @@ func (e *Engine) LoadHTMLPath(path string) {
 
 // 开发默认html热加载
 func (e *Engine) LoadHTMLDebug() *template.Template {
+	funcMap := FuncMap
 	HtmlGlob, err := template.ParseGlob(Path)
+	if funcMap != nil {
+		HtmlGlob.Funcs(funcMap)
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
