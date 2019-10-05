@@ -20,13 +20,12 @@ func main() {
 
 	app.Get("/", testhtml)
 
-	app.Run(erguotou.SetHost(":8081"),erguotou.SetDebug(true))
+	app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(true))
 }
-
 
 func testhtml(ctx *erguotou.Context) {
 
-	ctx.Data("Ok","test")
+	ctx.Data("Ok", "test")
 
-	ctx.HTML(200,"/user/hello.html")
+	ctx.HTML(200, "/user/hello.html")
 }

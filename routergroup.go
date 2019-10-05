@@ -11,8 +11,7 @@ import (
 	"log"
 )
 
-// RouterGroup is used internally to configure router, a RouterGroup is associated with
-// a prefix and an array of handlers (middleware).
+// 内部路由器
 type RouterGroup struct {
 	Handlers HandlersChain
 	basePath string

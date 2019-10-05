@@ -112,20 +112,12 @@ func (c *Context) SeedFileByte(file []byte) {
 
 // 获取get数据
 func (c *Context) GetVal(key string) []byte {
-	args := c.Ctx.QueryArgs()
-
-	peek := args.Peek(key)
-
-	return peek
+	return c.Ctx.QueryArgs().Peek(key)
 }
 
 // 获取post数据
 func (c *Context) PostVal(key string) []byte {
-	args := c.Ctx.PostArgs()
-
-	peek := args.Peek(key)
-
-	return peek
+	return c.Ctx.PostArgs().Peek(key)
 }
 
 // 获取body数据
@@ -140,13 +132,16 @@ func (c *Context) FormFile(file string) (*multipart.FileHeader, error) {
 
 // 渲染 html
 func (c *Context) HTML(code int, tplName string) {
+	// 构建pool
+	// 如果像pool中取超时
+	// 则像临时对象池中获取
 	c.Ctx.SetStatusCode(code)
 	c.Ctx.SetContentType("text/html")
 	var HtmlGlob *template.Template
 
 	if erguotou_debug {
 		HtmlGlob = c.engine.LoadHTMLDebug()
-	}else {
+	} else {
 		obj, e := HtmlPool.GetObj(15 * time.Millisecond)
 		if e != nil {
 			// 如果超时就从临时对象池内获取
@@ -163,7 +158,6 @@ func (c *Context) HTML(code int, tplName string) {
 
 	}
 
-
 	data := make(map[string]interface{})
 	c.data.Range(func(key, value interface{}) bool {
 		s := key.(string)
@@ -172,9 +166,9 @@ func (c *Context) HTML(code int, tplName string) {
 		return true
 	})
 
-	HtmlGlob.ExecuteTemplate(c.Ctx, tplName,data)
+	HtmlGlob.ExecuteTemplate(c.Ctx, tplName, data)
 }
 
 func (c *Context) Data(key string, data interface{}) {
-	c.data.Store(key,data)
+	c.data.Store(key, data)
 }
