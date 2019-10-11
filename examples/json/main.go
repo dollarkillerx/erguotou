@@ -12,7 +12,7 @@ func main() {
 	app := erguotou.New()
 
 	app.Get("/", func(ctx *erguotou.Context) {
-		ctx.Json(200,"ok")
+		ctx.Json(200, "ok")
 	})
 
 	app.Run(erguotou.SetHost(":8081"))

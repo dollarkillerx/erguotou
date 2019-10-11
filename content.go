@@ -44,28 +44,28 @@ func (c *Context) Next() {
 }
 
 // 返回string
-func (c *Context) String(code int, msg string) {
+func (c *Context) String(code int, msg string) (int, error) {
 	c.Ctx.SetStatusCode(code)
-	c.Ctx.WriteString(msg)
+	return c.Ctx.WriteString(msg)
 }
 
 // 返回json
-func (c *Context) Json(code int, msg interface{}) {
+func (c *Context) Json(code int, msg interface{}) (int, error) {
 	c.Ctx.SetStatusCode(code)
 	c.Ctx.SetContentType("application/json")
 	bytes, e := Jsonp.Marshal(msg)
 	if e != nil {
 		clog.PrintWa(e)
-		return
+		return -1, e
 	}
-	c.Ctx.Write(bytes)
+	return c.Ctx.Write(bytes)
 }
 
 // 返回[]byte
-func (c *Context) Write(code int, msg []byte) {
+func (c *Context) Write(code int, msg []byte) (int, error) {
 	c.Ctx.SetStatusCode(code)
 	c.Ctx.SetContentType("application/json")
-	c.Ctx.Write(msg)
+	return c.Ctx.Write(msg)
 }
 
 // 获取path value
@@ -133,7 +133,7 @@ func (c *Context) FormFile(file string) (*multipart.FileHeader, error) {
 }
 
 // 渲染 html
-func (c *Context) HTML(code int, tplName string) {
+func (c *Context) HTML(code int, tplName string) error {
 	// 构建pool
 	// 如果像pool中取超时
 	// 则像临时对象池中获取
@@ -141,7 +141,7 @@ func (c *Context) HTML(code int, tplName string) {
 	c.Ctx.SetContentType("text/html")
 	var HtmlGlob *template.Template
 
-	if erguotou_debug {
+	if erguotouDebug {
 		HtmlGlob = c.engine.LoadHTMLDebug()
 	} else {
 		obj, e := HtmlPool.GetObj(15 * time.Millisecond)
@@ -154,10 +154,12 @@ func (c *Context) HTML(code int, tplName string) {
 		} else {
 			HtmlGlob = obj.(*template.Template)
 			defer func() {
-				HtmlPool.Release(HtmlGlob)
+				err := HtmlPool.Release(HtmlGlob)
+				if err != nil {
+					clog.PrintEr(err)
+				}
 			}()
 		}
-
 	}
 
 	data := make(map[string]interface{})
@@ -168,7 +170,7 @@ func (c *Context) HTML(code int, tplName string) {
 		return true
 	})
 
-	HtmlGlob.ExecuteTemplate(c.Ctx, tplName, data)
+	return HtmlGlob.ExecuteTemplate(c.Ctx, tplName, data)
 }
 
 func (c *Context) Data(key string, data interface{}) {

@@ -12,25 +12,25 @@ import (
 )
 
 // 对象池
-type ObjPoll struct {
+type ObjPool struct {
 	bufChan chan interface{}
 }
 
 type PoolGenerateItem func() interface{}
 
 // 创建对象池
-func NewObjPoll(obj PoolGenerateItem, num int) *ObjPoll {
-	poll := ObjPoll{}
-	poll.bufChan = make(chan interface{}, num)
+func NewObjPoll(obj PoolGenerateItem, num int) *ObjPool {
+	pool := ObjPool{}
+	pool.bufChan = make(chan interface{}, num)
 	for i := 0; i < num; i++ {
-		poll.bufChan <- obj()
+		pool.bufChan <- obj()
 	}
 
-	return &poll
+	return &pool
 }
 
 // 获取对象
-func (p *ObjPoll) GetObj(timeout time.Duration) (interface{}, error) {
+func (p *ObjPool) GetObj(timeout time.Duration) (interface{}, error) {
 	select {
 	case ret := <-p.bufChan:
 		return ret, nil
@@ -40,11 +40,11 @@ func (p *ObjPoll) GetObj(timeout time.Duration) (interface{}, error) {
 }
 
 // 放回对象
-func (p *ObjPoll) Release(obj interface{}) error {
+func (p *ObjPool) Release(obj interface{}) error {
 	select {
 	case p.bufChan <- obj:
 		return nil
 	default:
-		return errors.New("overflow")
+		return errors.New("pool overflow")
 	}
 }

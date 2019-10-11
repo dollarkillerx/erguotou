@@ -7,11 +7,11 @@
 package erguotou
 
 var (
-	erguotou_debug bool
+	erguotouDebug bool
 )
 
 func init() {
-	erguotou_debug = false
+	erguotouDebug = false
 }
 
 type Options struct {
@@ -30,11 +30,10 @@ func SetHost(host string) Option {
 
 // 设置debug
 func SetDebug(debug bool) Option {
-	erguotou_debug = debug
+	erguotouDebug = debug
 	return func(options *Options) {
 	}
 }
-
 
 // 设置上传大小
 func SetUploadSize(size int) Option {
