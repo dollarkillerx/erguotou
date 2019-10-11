@@ -81,7 +81,7 @@ func mapForm(ptr interface{}, form *fasthttp.Args) error {
 
 		// 如果 没有 tag 就用原来的名称示意
 		if inputFieldName == "" {
-			inputFieldName = typeField.Tag.Get("json")  // 获取type tag
+			inputFieldName = typeField.Tag.Get("json") // 获取type tag
 			if inputFieldName == "" {
 				inputFieldName = typeField.Name
 			}

@@ -32,7 +32,7 @@ func HttpSplice(h1, h2 string) string {
 	return u
 }
 
-type Utils struct {}
+type Utils struct{}
 
 func (u *Utils) Get(url string) ([]byte, error) {
 	statusCode, body, err := fasthttp.Get(nil, url)

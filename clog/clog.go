@@ -60,7 +60,7 @@ func des(str interface{}) string {
 		line = 0
 	}
 	_, filename := path.Split(file)
-	
+
 	msg := fmt.Sprintf("[ %v : %v ]  %v", filename, strconv.Itoa(line), str)
 	return msg
 }
