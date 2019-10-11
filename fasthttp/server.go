@@ -92,6 +92,17 @@ func ListenAndServe(addr string, handler RequestHandler) error {
 	return s.ListenAndServe(addr)
 }
 
+func ListenAndServeUpSize(addr string, handler RequestHandler,uploadSize int) error {
+	if uploadSize == 0 {
+		uploadSize = 8 << 20
+	}
+	s := &Server{
+		Handler: handler,
+		MaxRequestBodySize:uploadSize,
+	}
+	return s.ListenAndServe(addr)
+}
+
 // ListenAndServeUNIX serves HTTP requests from the given UNIX addr
 // using the given handler.
 //

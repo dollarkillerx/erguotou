@@ -16,6 +16,7 @@ func init() {
 
 type Options struct {
 	Host string
+	Size int
 }
 
 type Option func(*Options)
@@ -31,5 +32,13 @@ func SetHost(host string) Option {
 func SetDebug(debug bool) Option {
 	erguotou_debug = debug
 	return func(options *Options) {
+	}
+}
+
+
+// 设置上传大小
+func SetUploadSize(size int) Option {
+	return func(options *Options) {
+		options.Size = size
 	}
 }
