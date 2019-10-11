@@ -55,7 +55,12 @@ func (e *Engine) Run(options ...Option) error {
 	log.Println("Server Run " + url)
 	log.Printf("Debug: %v", erguotouDebug)
 
-	err := fasthttp.ListenAndServe(option.Host, e.router.Handler)
+	var err error
+	if option.Size == 0 {
+		err = fasthttp.ListenAndServe(option.Host, e.router.Handler)
+	} else {
+		err = fasthttp.ListenAndServeUpSize(option.Host, e.router.Handler, option.Size)
+	}
 
 	return err
 }
