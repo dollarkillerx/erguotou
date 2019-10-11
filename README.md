@@ -19,6 +19,10 @@ erguotou 二锅头 基于fasthttp的轻量级web框架
     - [文件服务器](#文件服务器)
     - [HTML渲染](#HTML渲染)
     
+### 贡献名单 (排名不分先后)
+- [NaviVoid](https://github.com/NaviVoid)
+- [DollarKiller](https://github.com/dollarkillerx) 
+
 ### 安装
 ``` 
 go get github.com/dollarkillerx/erguotou

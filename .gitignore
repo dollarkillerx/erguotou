@@ -13,3 +13,4 @@ go.sum
 *.out
 
 .idea
+go.sum
