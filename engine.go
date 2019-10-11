@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	HtmlPool      *ObjPoll
+	HtmlPool      *ObjPool
 	HtmlTemporary *sync.Pool
 	Path          string
 	FuncMap       template.FuncMap
@@ -23,7 +23,7 @@ var (
 
 type Engine struct {
 	RouterGroup
-	fsroot *fasthttprouter.Router
+	router *fasthttprouter.Router
 }
 
 func New() *Engine {
@@ -33,7 +33,7 @@ func New() *Engine {
 			root:     true,
 			basePath: "/",
 		},
-		fsroot: fasthttprouter.New(),
+		router: fasthttprouter.New(),
 	}
 	eng.RouterGroup.engine = eng
 	return eng
@@ -53,9 +53,9 @@ func (e *Engine) Run(options ...Option) error {
 		url += option.Host
 	}
 	log.Println("Server Run " + url)
-	log.Printf("Debug: %v", erguotou_debug)
+	log.Printf("Debug: %v", erguotouDebug)
 
-	err := fasthttp.ListenAndServe(option.Host, e.fsroot.Handler)
+	err := fasthttp.ListenAndServe(option.Host, e.router.Handler)
 
 	return err
 }
@@ -68,11 +68,11 @@ func (e *Engine) Status(path, dir string) {
 	} else {
 		path = path + "/*filepath"
 	}
-	e.engine.fsroot.ServeFiles(path, dir)
+	e.engine.router.ServeFiles(path, dir)
 }
 
 // 注册模板  ("templates/**/*"),funcMap
-func (e *Engine) LoadHTMLPath(path string,funcMap template.FuncMap) {
+func (e *Engine) LoadHTMLPath(path string, funcMap template.FuncMap) {
 	Path = path
 	FuncMap = funcMap
 	HtmlPool = NewObjPoll(func() interface{} {
@@ -94,7 +94,9 @@ func (e *Engine) LoadHTMLDebug() *template.Template {
 	funcMap := FuncMap
 	HtmlGlob, err := template.ParseGlob(Path)
 	if funcMap != nil {
-		HtmlGlob.Funcs(funcMap)
+		if HtmlGlob != nil {
+			HtmlGlob = HtmlGlob.Funcs(funcMap)
+		}
 	}
 	if err != nil {
 		log.Fatal(err)

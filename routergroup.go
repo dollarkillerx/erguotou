@@ -85,9 +85,12 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 		engine:   r.engine,
 		handlers: handlers,
 	}
+
+	var err error
+
 	switch httpMethod {
 	case "POST":
-		r.engine.fsroot.POST(relativePath, func(ctxF *fasthttp.RequestCtx) {
+		r.engine.router.POST(relativePath, func(ctxF *fasthttp.RequestCtx) {
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
@@ -99,14 +102,14 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					trace := utils.PanicTrace(2048)
 					log.Println(trace)
 
-					ctx.Ctx.WriteString("server error")
+					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "GET":
-		r.engine.fsroot.GET(relativePath, func(ctxF *fasthttp.RequestCtx) {
+		r.engine.router.GET(relativePath, func(ctxF *fasthttp.RequestCtx) {
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
@@ -116,14 +119,14 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
 					log.Println(trace)
-					ctx.Ctx.WriteString("server error")
+					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "DELETE":
-		r.engine.fsroot.DELETE(relativePath, func(ctxF *fasthttp.RequestCtx) {
+		r.engine.router.DELETE(relativePath, func(ctxF *fasthttp.RequestCtx) {
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
@@ -133,14 +136,14 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
 					log.Println(trace)
-					ctx.Ctx.WriteString("server error")
+					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "PUT":
-		r.engine.fsroot.PUT(relativePath, func(ctxF *fasthttp.RequestCtx) {
+		r.engine.router.PUT(relativePath, func(ctxF *fasthttp.RequestCtx) {
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
@@ -150,14 +153,14 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
 					log.Println(trace)
-					ctx.Ctx.WriteString("server error")
+					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "PATCH":
-		r.engine.fsroot.PATCH(relativePath, func(ctxF *fasthttp.RequestCtx) {
+		r.engine.router.PATCH(relativePath, func(ctxF *fasthttp.RequestCtx) {
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
@@ -167,14 +170,14 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
 					log.Println(trace)
-					ctx.Ctx.WriteString("server error")
+					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "HEAD":
-		r.engine.fsroot.HEAD(relativePath, func(ctxF *fasthttp.RequestCtx) {
+		r.engine.router.HEAD(relativePath, func(ctxF *fasthttp.RequestCtx) {
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
@@ -184,14 +187,14 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
 					log.Println(trace)
-					ctx.Ctx.WriteString("server error")
+					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
 	case "OPTIONS":
-		r.engine.fsroot.OPTIONS(relativePath, func(ctxF *fasthttp.RequestCtx) {
+		r.engine.router.OPTIONS(relativePath, func(ctxF *fasthttp.RequestCtx) {
 			defer func() {
 				if re := recover(); re != nil {
 					ctx.Ctx.SetStatusCode(500)
@@ -201,11 +204,15 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
 					log.Println(trace)
-					ctx.Ctx.WriteString("server error")
+					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
 			ctx.Ctx = ctxF
 			ctx.Next()
 		})
+	}
+
+	if err != nil {
+		log.Println(err)
 	}
 }

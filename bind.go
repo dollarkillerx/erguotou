@@ -15,22 +15,19 @@ import (
 	"time"
 )
 
-func (c *Context) BandValue(obj interface{}) error {
-	err := band(c.Ctx, obj)
-	return err
+func (c *Context) BindValue(obj interface{}) error {
+	return bind(c.Ctx, obj)
 }
 
-func (c *Context) BandFrom(obj interface{}) error {
-	err := bindFormPost(c.Ctx, obj)
-	return err
+func (c *Context) BindFrom(obj interface{}) error {
+	return bindFormPost(c.Ctx, obj)
 }
 
-func (c *Context) BandJson(obj interface{}) error {
-	err := bindJson(c.Ctx, obj)
-	return err
+func (c *Context) BindJson(obj interface{}) error {
+	return bindJson(c.Ctx, obj)
 }
 
-func band(req *fasthttp.RequestCtx, obj interface{}) error {
+func bind(req *fasthttp.RequestCtx, obj interface{}) error {
 
 	contentType := string(req.Request.Header.ContentType())
 	//如果是简单的json
@@ -44,35 +41,28 @@ func band(req *fasthttp.RequestCtx, obj interface{}) error {
 		return bindFormGet(req, obj)
 	}
 
-	return errors.New("当前方法暂不支持")
+	return errors.New("bind error: unsupported method")
 }
 
 // 绑定Json数据
 func bindJson(req *fasthttp.RequestCtx, obj interface{}) error {
 	data := req.PostBody()
-	err := Jsonp.Unmarshal(data, obj)
-	return err
+	return Jsonp.Unmarshal(data, obj)
 }
 
 // 绑定Form数据
 func bindFormPost(req *fasthttp.RequestCtx, obj interface{}) error {
 	getValues := req.PostArgs()
-
-	err := mapForm(obj, getValues)
-
-	return err
+	return mapForm(obj, getValues)
 }
 
 func bindFormGet(req *fasthttp.RequestCtx, obj interface{}) error {
 	getValues := req.QueryArgs()
-	err := mapForm(obj, getValues)
-
-	return err
+	return mapForm(obj, getValues)
 }
 
 //自动绑定方法
 func mapForm(ptr interface{}, form *fasthttp.Args) error {
-	//log.Println("==========")
 	typ := reflect.TypeOf(ptr).Elem()  // 获取type elem
 	val := reflect.ValueOf(ptr).Elem() // 获取val elem
 
@@ -91,7 +81,7 @@ func mapForm(ptr interface{}, form *fasthttp.Args) error {
 
 		// 如果 没有 tag 就用原来的名称示意
 		if inputFieldName == "" {
-			inputFieldName = typeField.Tag.Get("json") // 获取type tag
+			inputFieldName = typeField.Tag.Get("json")  // 获取type tag
 			if inputFieldName == "" {
 				inputFieldName = typeField.Name
 			}
@@ -160,6 +150,7 @@ func mapForm(ptr interface{}, form *fasthttp.Args) error {
 			return err
 		}
 	}
+
 	return nil
 }
 
@@ -230,7 +221,7 @@ func setBoolField(val string, field reflect.Value) error {
 	if err == nil {
 		field.SetBool(boolVal)
 	}
-	return nil
+	return err
 }
 
 func setFloatField(val string, bitSize int, field reflect.Value) error {
@@ -291,5 +282,5 @@ func setTimeField(val string, structField reflect.StructField, value reflect.Val
 	}
 
 	value.Set(reflect.ValueOf(t))
-	return nil
+	return err
 }

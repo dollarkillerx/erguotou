@@ -13,7 +13,7 @@ import (
 func Logger(ctx *Context) {
 	path := ctx.Ctx.Path()
 
-	head := ""
+	var head string
 
 	switch {
 	case ctx.Ctx.IsGet():
