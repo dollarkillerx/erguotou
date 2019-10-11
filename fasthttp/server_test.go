@@ -155,7 +155,7 @@ func TestServerName(t *testing.T) {
 		},
 	}
 
-	getReponse := func() []byte {
+	getResponse := func() []byte {
 		rw := &readWriter{}
 		rw.r.WriteString("GET / HTTP/1.1\r\nHost: google.com\r\n\r\n")
 
@@ -181,7 +181,7 @@ func TestServerName(t *testing.T) {
 		return resp
 	}
 
-	resp := getReponse()
+	resp := getResponse()
 	if !bytes.Contains(resp, []byte("\r\nServer: "+string(defaultServerName)+"\r\n")) {
 		t.Fatalf("Unexpected response %q expected Server: "+string(defaultServerName), resp)
 	}
@@ -193,7 +193,7 @@ func TestServerName(t *testing.T) {
 		Name: "foobar",
 	}
 
-	resp = getReponse()
+	resp = getResponse()
 	if !bytes.Contains(resp, []byte("\r\nServer: foobar\r\n")) {
 		t.Fatalf("Unexpected response %q expected Server: foobar", resp)
 	}
@@ -205,7 +205,7 @@ func TestServerName(t *testing.T) {
 		NoDefaultContentType:  true,
 	}
 
-	resp = getReponse()
+	resp = getResponse()
 	if bytes.Contains(resp, []byte("\r\nServer: ")) {
 		t.Fatalf("Unexpected response %q expected no Server header", resp)
 	}
