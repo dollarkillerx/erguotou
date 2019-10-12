@@ -96,12 +96,31 @@ func (e *Engine) LoadHTMLPath(path string, funcMap template.FuncMap) {
 
 // 开发默认html热加载
 func (e *Engine) LoadHTMLDebug() *template.Template {
+	//funcMap := FuncMap
+	//log.Println(funcMap)
+	//HtmlGlob, err := template.ParseGlob(Path)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//if funcMap != nil {
+	//	if HtmlGlob != nil {
+	//		HtmlGlob = HtmlGlob.Funcs(funcMap)
+	//	}else {
+	//		log.Fatal("eee")
+	//	}
+	//}
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//return HtmlGlob
+
 	funcMap := FuncMap
-	HtmlGlob, err := template.ParseGlob(Path)
-	if funcMap != nil {
-		if HtmlGlob != nil {
-			HtmlGlob = HtmlGlob.Funcs(funcMap)
-		}
+	var HtmlGlob *template.Template
+	var err error
+	if funcMap == nil {
+		HtmlGlob, err = template.New("s").ParseGlob(Path)
+	}else {
+		HtmlGlob, err = template.New("s").Funcs(funcMap).ParseGlob(Path)
 	}
 	if err != nil {
 		log.Fatal(err)

@@ -8,6 +8,7 @@ package main
 
 import (
 	"github.com/dollarkillerx/erguotou"
+	"html/template"
 	"math/rand"
 	"time"
 )
@@ -18,11 +19,17 @@ func main() {
 	//app.Use(erguotou.Logger)
 
 	// 注册html
-	app.LoadHTMLPath("examples/html/view/**/*", nil)
-
+	app.LoadHTMLPath("examples/html/view/**/*", template.FuncMap{"add":PageAA})
 	app.Get("/", testhtml)
+	app.Get("/c", func(ctx *erguotou.Context) {
 
-	app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(false))
+	})
+
+	app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(true))
+}
+
+func PageAA(page int) int {
+	return page + 1
 }
 
 func testhtml(ctx *erguotou.Context) {
@@ -32,6 +39,8 @@ func testhtml(ctx *erguotou.Context) {
 	intn := rand.Intn(len(data))
 
 	ctx.Data("Ok", data[intn])
+
+	ctx.Data("zc",11)
 
 	ctx.HTML(200, "/user/hello.html")
 }

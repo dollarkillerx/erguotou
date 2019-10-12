@@ -175,3 +175,7 @@ func (c *Context) HTML(code int, tplName string) error {
 func (c *Context) Data(key string, data interface{}) {
 	c.data.Store(key, data)
 }
+
+func (c *Context) Redirect(code int, location string) {
+	c.Ctx.Redirect(location,code)
+}
