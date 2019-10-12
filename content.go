@@ -64,7 +64,6 @@ func (c *Context) Json(code int, msg interface{}) (int, error) {
 // 返回[]byte
 func (c *Context) Write(code int, msg []byte) (int, error) {
 	c.Ctx.SetStatusCode(code)
-	c.Ctx.SetContentType("application/json")
 	return c.Ctx.Write(msg)
 }
 
