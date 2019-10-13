@@ -18,7 +18,7 @@ erguotou 二锅头 基于fasthttp的轻量级web框架
     - [使用中间件](#使用中间件)
     - [文件服务器](#文件服务器)
     - [HTML渲染](#HTML渲染)
-    
+    - [Session](#session)
 ### 贡献名单 (排名不分先后)
 - [NaviVoid](https://github.com/NaviVoid)
 - [DollarKiller](https://github.com/dollarkillerx) 
@@ -268,6 +268,28 @@ func testhtml(ctx *erguotou.Context) {
 
 	ctx.HTML(200,"/user/hello.html")
 }
+```
+
+### session
+``` 
+    engine.Get("/hello", func(ctx *erguotou.Context) {
+		cache := session.GetSessionCache()
+		cache.Set("name", "hello")
+		cache.Set("ppc", "sdasd")
+		cache.Save(ctx)
+	})
+
+	engine.Get("/ppc", func(ctx *erguotou.Context) {
+		cache := session.GetSessionCache()
+		get, b := cache.Get(ctx, "name")
+		if b {
+			log.Println(get)
+		}
+		get, b = cache.Get(ctx, "ppc")
+		if b {
+			log.Println(get)
+		}
+	})
 ```
 
 ### 性能测试
