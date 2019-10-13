@@ -17,7 +17,7 @@ func main() {
 	app.Get("/setcookie", func(ctx *erguotou.Context) {
 		val := ctx.GetVal("name")
 
-		ctx.SetCookie("name",string(val))
+		ctx.SetCookie("name", string(val))
 
 		ctx.Write(200, val)
 	})

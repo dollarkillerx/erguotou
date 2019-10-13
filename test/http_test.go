@@ -66,7 +66,7 @@ func TestBandJson(t *testing.T) {
 
 	data := user{}
 	app.Post("/testjson", func(ctx *erguotou.Context) {
-		value := ctx.BandValue(&data)
+		value := ctx.BindValue(&data)
 		if value != nil {
 			panic(value)
 		}
@@ -75,7 +75,7 @@ func TestBandJson(t *testing.T) {
 	})
 
 	app.Get("/testjson", func(ctx *erguotou.Context) {
-		value := ctx.BandValue(&data)
+		value := ctx.BindValue(&data)
 		if value != nil {
 			panic(value)
 		}

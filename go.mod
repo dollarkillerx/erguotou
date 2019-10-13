@@ -3,6 +3,7 @@ module github.com/dollarkillerx/erguotou
 go 1.12
 
 require (
+	github.com/bluele/gcache v0.0.0-20190518031135-bc40bd653833
 	github.com/json-iterator/go v1.1.7
 	github.com/klauspost/compress v1.8.6
 	github.com/klauspost/cpuid v1.2.1 // indirect

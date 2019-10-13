@@ -14,10 +14,9 @@ func (c *Context) GetCookie(key string) string {
 	return string(c.Ctx.Request.Header.Cookie(key))
 }
 
-func (c *Context) SetCookie(key string,val string){
+func (c *Context) SetCookie(key string, val string) {
 	cookie := fasthttp.Cookie{}
 	cookie.SetKey(key)
 	cookie.SetValue(val)
 	c.Ctx.Response.Header.SetCookie(&cookie)
 }
-

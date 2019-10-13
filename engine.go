@@ -119,7 +119,7 @@ func (e *Engine) LoadHTMLDebug() *template.Template {
 	var err error
 	if funcMap == nil {
 		HtmlGlob, err = template.New("s").ParseGlob(Path)
-	}else {
+	} else {
 		HtmlGlob, err = template.New("s").Funcs(funcMap).ParseGlob(Path)
 	}
 	if err != nil {

@@ -177,5 +177,5 @@ func (c *Context) Data(key string, data interface{}) {
 }
 
 func (c *Context) Redirect(code int, location string) {
-	c.Ctx.Redirect(location,code)
+	c.Ctx.Redirect(location, code)
 }

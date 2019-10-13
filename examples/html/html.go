@@ -19,7 +19,7 @@ func main() {
 	//app.Use(erguotou.Logger)
 
 	// 注册html
-	app.LoadHTMLPath("examples/html/view/**/*", template.FuncMap{"add":PageAA})
+	app.LoadHTMLPath("examples/html/view/**/*", template.FuncMap{"add": PageAA})
 	app.Get("/", testhtml)
 	app.Get("/c", func(ctx *erguotou.Context) {
 
@@ -40,7 +40,7 @@ func testhtml(ctx *erguotou.Context) {
 
 	ctx.Data("Ok", data[intn])
 
-	ctx.Data("zc",11)
+	ctx.Data("zc", 11)
 
 	ctx.HTML(200, "/user/hello.html")
 }

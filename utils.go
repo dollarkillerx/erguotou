@@ -8,10 +8,14 @@ package erguotou
 
 import (
 	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"github.com/dollarkillerx/erguotou/fasthttp"
+	"math/rand"
 	"runtime"
 	"strconv"
+	"time"
 )
 
 func HttpSplice(h1, h2 string) string {
@@ -67,4 +71,21 @@ func (u *Utils) PanicTrace(kb int) []byte {
 	}
 	stack = bytes.TrimRight(stack, "\n")
 	return stack
+}
+
+func (u *Utils) SuperRand() string {
+	head := int(time.Now().UnixNano())
+	body := rand.Intn(999999)
+	footer := int(time.Now().UnixNano())
+
+	encode := u.Sha256Encode(strconv.Itoa(head + body + footer))
+
+	return encode
+}
+
+// 获取sha256
+func (u *Utils) Sha256Encode(str string) string {
+	sum256 := sha256.Sum256([]byte(str))
+	s := hex.EncodeToString(sum256[:])
+	return s
 }
