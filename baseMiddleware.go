@@ -59,4 +59,6 @@ func Local(ctx *Context) {
 			ctx.Data("local", init.SourceMap)
 		})
 	}
+
+	ctx.Next()
 }
