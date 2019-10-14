@@ -31,6 +31,7 @@ func SetHost(host string) Option {
 
 // 设置debug
 func SetDebug(debug bool) Option {
+	erguotouDebug = debug
 	return func(options *Options) {
 		options.Debug = debug
 	}
