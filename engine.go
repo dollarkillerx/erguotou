@@ -22,6 +22,7 @@ var (
 )
 
 type Engine struct {
+	Option Options
 	RouterGroup
 	router *fasthttprouter.Router
 }
@@ -45,6 +46,7 @@ func (e *Engine) Run(options ...Option) error {
 	for _, k := range options {
 		k(&option)
 	}
+	e.Option = option
 	url := "http://"
 
 	if string(option.Host[0]) == ":" {
@@ -96,24 +98,6 @@ func (e *Engine) LoadHTMLPath(path string, funcMap template.FuncMap) {
 
 // 开发默认html热加载
 func (e *Engine) LoadHTMLDebug() *template.Template {
-	//funcMap := FuncMap
-	//log.Println(funcMap)
-	//HtmlGlob, err := template.ParseGlob(Path)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//if funcMap != nil {
-	//	if HtmlGlob != nil {
-	//		HtmlGlob = HtmlGlob.Funcs(funcMap)
-	//	}else {
-	//		log.Fatal("eee")
-	//	}
-	//}
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//return HtmlGlob
-
 	funcMap := FuncMap
 	var HtmlGlob *template.Template
 	var err error
