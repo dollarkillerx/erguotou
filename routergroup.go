@@ -100,8 +100,7 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					// 打印堆栈信息
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
-					log.Println(trace)
-
+					log.Println(string(trace))
 					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -118,7 +117,7 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					// 打印堆栈信息
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
-					log.Println(trace)
+					log.Println(string(trace))
 					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -135,7 +134,7 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					// 打印堆栈信息
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
-					log.Println(trace)
+					log.Println(string(trace))
 					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -152,7 +151,7 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					// 打印堆栈信息
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
-					log.Println(trace)
+					log.Println(string(trace))
 					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -169,7 +168,7 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					// 打印堆栈信息
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
-					log.Println(trace)
+					log.Println(string(trace))
 					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -186,7 +185,7 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					// 打印堆栈信息
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
-					log.Println(trace)
+					log.Println(string(trace))
 					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()
@@ -203,7 +202,7 @@ func (r *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersC
 					// 打印堆栈信息
 					utils := Utils{}
 					trace := utils.PanicTrace(2048)
-					log.Println(trace)
+					log.Println(string(trace))
 					_, err = ctx.Ctx.WriteString("server error")
 				}
 			}()

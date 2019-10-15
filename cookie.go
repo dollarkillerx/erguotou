@@ -18,5 +18,6 @@ func (c *Context) SetCookie(key string, val string) {
 	cookie := fasthttp.Cookie{}
 	cookie.SetKey(key)
 	cookie.SetValue(val)
+	cookie.SetHTTPOnly(true)
 	c.Ctx.Response.Header.SetCookie(&cookie)
 }

@@ -13,7 +13,7 @@ import (
 func main() {
 	app := erguotou.New()
 
-	app.Use(erguotou.Local)
+	app.Use(erguotou.Local("en"))
 
 	app.Get("/", func(ctx *erguotou.Context) {
 		// 使用 html 上 {{.local.zh.name}}

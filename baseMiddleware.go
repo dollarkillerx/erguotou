@@ -15,11 +15,9 @@ import (
 )
 
 var localOnce sync.Once
-var localOnce2 sync.Once
 
 func init() {
 	localOnce = sync.Once{}
-	localOnce2 = sync.Once{}
 }
 
 func Logger(ctx *Context) {
@@ -44,10 +42,14 @@ func Logger(ctx *Context) {
 
 func Local(language string) func(ctx *Context) {
 	return func(ctx *Context) {
-		localOnce2.Do(func() {
+		lang := ctx.GetCookie("language")
+		if lang == "" {
 			ctx.SetCookie("language", language)
-		})
-		language = ctx.GetCookie("language")
+		}else {
+			if lang != language {
+				language = lang
+			}
+		}
 		if ctx.engine.Option.Debug {
 			init := local.LocalInit()
 			e := init.Init("local/local.json")
