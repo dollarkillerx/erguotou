@@ -28,12 +28,13 @@ func (l *Local) Init(path string) error {
 	}
 	l.source = bytes
 
-	source := make(map[string]interface{})
+	source := make(map[string]map[string]interface{})
 
 	e = json.Unmarshal(bytes, &source)
 	if e != nil {
 		return e
 	}
+	l.SourceMap = source
 	return nil
 }
 

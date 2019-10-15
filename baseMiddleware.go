@@ -61,6 +61,7 @@ func Local(language string) func(ctx *Context) {
 			if ok {
 				ctx.Data("local", i)
 			}else {
+				log.Println(init.SourceMap)
 				clog.PrintWa("No language pack")
 			}
 		} else {
@@ -77,6 +78,7 @@ func Local(language string) func(ctx *Context) {
 				if ok {
 					ctx.Data("local", i)
 				}else {
+					log.Println(init.SourceMap)
 					clog.PrintWa("No language pack")
 				}
 			})
