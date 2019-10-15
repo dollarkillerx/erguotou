@@ -7,13 +7,20 @@
 package erguotou
 
 import (
+	"github.com/dollarkillerx/erguotou/clog"
 	"github.com/dollarkillerx/erguotou/local"
 	"io/ioutil"
 	"log"
 	"sync"
 )
 
-var localOnce = sync.Once{}
+var localOnce sync.Once
+var localOnce2 sync.Once
+
+func init() {
+	localOnce = sync.Once{}
+	localOnce2 = sync.Once{}
+}
 
 func Logger(ctx *Context) {
 	path := ctx.Ctx.Path()
@@ -35,19 +42,13 @@ func Logger(ctx *Context) {
 	ctx.Next()
 }
 
-func Local(ctx *Context) {
-	if ctx.engine.Option.Debug {
-		init := local.LocalInit()
-		e := init.Init("local/local.json")
-		if e != nil {
-			e := ioutil.WriteFile("local/local.json", []byte(local.Source), 00755)
-			if e != nil {
-				log.Fatal("Localization is initialized")
-			}
-		}
-		ctx.Data("local", init.SourceMap)
-	} else {
-		localOnce.Do(func() {
+func Local(language string) func(ctx *Context) {
+	return func(ctx *Context) {
+		localOnce2.Do(func() {
+			ctx.SetCookie("language", language)
+		})
+		language = ctx.GetCookie("language")
+		if ctx.engine.Option.Debug {
 			init := local.LocalInit()
 			e := init.Init("local/local.json")
 			if e != nil {
@@ -56,9 +57,32 @@ func Local(ctx *Context) {
 					log.Fatal("Localization is initialized")
 				}
 			}
-			ctx.Data("local", init.SourceMap)
-		})
+			i,ok := init.SourceMap[language]
+			if ok {
+				ctx.Data("local", i)
+			}else {
+				clog.PrintWa("No language pack")
+			}
+		} else {
+			localOnce.Do(func() {
+				init := local.LocalInit()
+				e := init.Init("local/local.json")
+				if e != nil {
+					e := ioutil.WriteFile("local/local.json", []byte(local.Source), 00755)
+					if e != nil {
+						log.Fatal("Localization is initialized")
+					}
+				}
+				i,ok := init.SourceMap[language]
+				if ok {
+					ctx.Data("local", i)
+				}else {
+					clog.PrintWa("No language pack")
+				}
+			})
+		}
+
+		ctx.Next()
 	}
 
-	ctx.Next()
 }
