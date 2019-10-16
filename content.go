@@ -6,7 +6,6 @@
  */
 package erguotou
 
-import "C"
 import (
 	"github.com/dollarkillerx/erguotou/clog"
 	"github.com/dollarkillerx/erguotou/fasthttp"
