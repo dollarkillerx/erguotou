@@ -71,7 +71,7 @@ func (s *SessionEngine) SaveTime(ctx *erguotou.Context, time time.Duration) erro
 	return nil
 }
 
-func (s *SessionEngine) Del (ctx *erguotou.Context) error {
+func (s *SessionEngine) Del(ctx *erguotou.Context) error {
 	id := ctx.GetCookie(sessionKey)
 	err := s.db.Del(id)
 	if err != nil {

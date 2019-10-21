@@ -15,8 +15,8 @@ func init() {
 }
 
 type Options struct {
-	Host string
-	Size int
+	Host  string
+	Size  int
 	Debug bool
 }
 

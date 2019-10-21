@@ -12,7 +12,7 @@ import (
 )
 
 type Local struct {
-	source    []byte `json:"source"` // init 数据源
+	source    []byte                            `json:"source"` // init 数据源
 	SourceMap map[string]map[string]interface{} // init 数据源map
 }
 

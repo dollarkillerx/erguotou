@@ -132,27 +132,29 @@ func (c *Context) FormFile(file string) (*multipart.FileHeader, error) {
 
 // 渲染 html
 func (c *Context) HTML(code int, tplName string) error {
+	c.engine.Html.Show()
 	// 构建pool
 	// 如果像pool中取超时
 	// 则像临时对象池中获取
 	c.Ctx.SetStatusCode(code)
 	c.Ctx.SetContentType("text/html")
+
 	var HtmlGlob *template.Template
 
 	if erguotouDebug {
-		HtmlGlob = c.engine.LoadHTMLDebug()
+		HtmlGlob = c.engine.Html.LoadHTMLDebug()
 	} else {
-		obj, e := HtmlPool.GetObj(15 * time.Millisecond)
+		obj, e := c.engine.Html.HtmlPool.GetObj(15 * time.Millisecond)
 		if e != nil {
 			// 如果超时就从临时对象池内获取
-			HtmlGlob = HtmlTemporary.Get().(*template.Template)
+			HtmlGlob = c.engine.Html.HtmlTemporary.Get().(*template.Template)
 			defer func() {
-				HtmlTemporary.Put(HtmlGlob)
+				c.engine.Html.HtmlTemporary.Put(HtmlGlob)
 			}()
 		} else {
 			HtmlGlob = obj.(*template.Template)
 			defer func() {
-				err := HtmlPool.Release(HtmlGlob)
+				err := c.engine.Html.HtmlPool.Release(HtmlGlob)
 				if err != nil {
 					clog.PrintEr(err)
 				}

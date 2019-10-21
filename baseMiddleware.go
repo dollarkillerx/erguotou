@@ -45,7 +45,7 @@ func Local(language string) func(ctx *Context) {
 		lang := ctx.GetCookie("language")
 		if lang == "" {
 			ctx.SetCookie("language", language)
-		}else {
+		} else {
 			if lang != language {
 				language = lang
 			}
@@ -59,10 +59,10 @@ func Local(language string) func(ctx *Context) {
 					log.Fatal("Localization is initialized")
 				}
 			}
-			i,ok := init.SourceMap[language]
+			i, ok := init.SourceMap[language]
 			if ok {
 				ctx.Data("local", i)
-			}else {
+			} else {
 				log.Println(init.SourceMap)
 				clog.PrintWa("No language pack")
 			}
@@ -76,10 +76,10 @@ func Local(language string) func(ctx *Context) {
 						log.Fatal("Localization is initialized")
 					}
 				}
-				i,ok := init.SourceMap[language]
+				i, ok := init.SourceMap[language]
 				if ok {
 					ctx.Data("local", i)
-				}else {
+				} else {
 					log.Println(init.SourceMap)
 					clog.PrintWa("No language pack")
 				}

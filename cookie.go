@@ -24,7 +24,7 @@ func (c *Context) SetCookie(key string, val string) {
 	c.Ctx.Response.Header.SetCookie(&cookie)
 }
 
-func (c *Context) SetCookieTime(key,val string,ti time.Duration) {
+func (c *Context) SetCookieTime(key, val string, ti time.Duration) {
 	cookie := fasthttp.Cookie{}
 	cookie.SetKey(key)
 	cookie.SetValue(val)
