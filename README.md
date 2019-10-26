@@ -237,7 +237,7 @@ engine.Get("/hello/:name", func(ctx *erguotou.Context) {
 func TestFileServe(t *testing.T) {
 	app := erguotou.New()
 
-	app.Status("/hello",".")
+	app.Static("/hello",".")
 
 	err := app.Run(erguotou.SetHost(":8082"))
 	if err != nil {

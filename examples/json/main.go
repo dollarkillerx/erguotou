@@ -6,12 +6,15 @@
  */
 package main
 
-import "github.com/dollarkillerx/erguotou"
+import (
+	"github.com/dollarkillerx/erguotou"
+)
 
 func main() {
 	app := erguotou.New()
 
 	app.Get("/", func(ctx *erguotou.Context) {
+
 		ctx.Json(200, "ok")
 	})
 

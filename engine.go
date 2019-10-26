@@ -62,7 +62,7 @@ func (e *Engine) Run(options ...Option) error {
 }
 
 // 文件服务器
-func (e *Engine) Status(path, dir string) {
+func (e *Engine) Static(path, dir string) {
 	u := string(path[len(path)-1])
 	if u == "/" {
 		path = path + "*filepath"
@@ -70,6 +70,11 @@ func (e *Engine) Status(path, dir string) {
 		path = path + "/*filepath"
 	}
 	e.engine.router.ServeFiles(path, dir)
+}
+
+// 文件服务器
+func (e *Engine) Status(path, dir string) {
+	e.Static(path, dir)
 }
 
 // 注册模板  ("templates/**/*"),funcMap   // 这里的设计思路貌似错误了    不是一开始就激活  而是 view html才激活这里

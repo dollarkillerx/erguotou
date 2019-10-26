@@ -33,7 +33,7 @@ func main() {
 		}
 	})
 
-	err := app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(false))
+	err := app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(false), erguotou.SetUploadSize(8<<20)) // 8M
 	if err != nil {
 		panic(err)
 	}

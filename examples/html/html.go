@@ -19,16 +19,15 @@ func main() {
 	//app.Use(erguotou.Logger)
 
 	// 注册html
-	app.LoadHTMLPath("examples/html/view/**/*", template.FuncMap{"add": PageAA})
+	app.LoadHTMLGlob("examples/html/view/**/*")     // 设置html目录
+	app.SetFuncMap(template.FuncMap{"Add": pageAA}) // 这里设置自义定模板函数
+	app.Delims("{%", "%}")                          // 这里设置模板
 	app.Get("/", testhtml)
-	app.Get("/c", func(ctx *erguotou.Context) {
-
-	})
 
 	app.Run(erguotou.SetHost(":8081"), erguotou.SetDebug(true))
 }
 
-func PageAA(page int) int {
+func pageAA(page int) int {
 	return page + 1
 }
 

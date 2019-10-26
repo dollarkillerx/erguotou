@@ -27,6 +27,10 @@ func (c *Context) BindJson(obj interface{}) error {
 	return bindJson(c.Ctx, obj)
 }
 
+func (c *Context) BindGet(obj interface{}) error {
+	return bindFormGet(c.Ctx, obj)
+}
+
 func bind(req *fasthttp.RequestCtx, obj interface{}) error {
 
 	contentType := string(req.Request.Header.ContentType())
