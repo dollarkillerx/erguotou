@@ -27,7 +27,7 @@ type token struct {
 
 func init() {
 	Token = &token{
-		key: util.SuperRand(),
+		key: util.SuperRand()[:32],
 	}
 }
 
