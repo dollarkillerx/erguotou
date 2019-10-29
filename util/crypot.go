@@ -7,7 +7,6 @@
 package util
 
 import (
-	"bytes"
 	"crypto"
 	"crypto/aes"
 	"crypto/cipher"
@@ -21,6 +20,7 @@ import (
 	"encoding/hex"
 	"encoding/pem"
 	"errors"
+	"io"
 )
 
 // 获取md5
@@ -239,30 +239,41 @@ func Base64URLDecode(s string) ([]byte, error) {
 }
 
 // 对称加密 AES 高级标准加密
-func padding(src []byte, blocksize int) []byte {
-	padnum := blocksize - len(src)%blocksize
-	pad := bytes.Repeat([]byte{byte(padnum)}, padnum)
-	return append(src, pad...)
+// Encrypt string to base64 crypto using AES
+func AESEncrypt(key []byte, plaintext []byte) ([]byte, bool) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, false
+	}
+
+	ciphertext := make([]byte, aes.BlockSize+len(plaintext))
+	iv := ciphertext[:aes.BlockSize]
+	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
+		return nil, false
+	}
+
+	stream := cipher.NewCFBEncrypter(block, iv)
+	stream.XORKeyStream(ciphertext[aes.BlockSize:], plaintext)
+
+	return ciphertext, true
 }
 
-func unpadding(src []byte) []byte {
-	n := len(src)
-	unpadnum := int(src[n-1])
-	return src[:n-unpadnum]
-}
+// Decrypt from base64 to decrypted string
+func AESDecrypt(key []byte, ciphertext []byte) ([]byte, bool) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, false
+	}
 
-func AESEncode(key []byte, src []byte) []byte {
-	block, _ := aes.NewCipher(key)
-	src = padding(src, block.BlockSize())
-	blockmode := cipher.NewCBCEncrypter(block, key)
-	blockmode.CryptBlocks(src, src)
-	return src
-}
+	if len(ciphertext) < aes.BlockSize {
+		return nil, false
+	}
+	iv := ciphertext[:aes.BlockSize]
+	ciphertext = ciphertext[aes.BlockSize:]
 
-func AESDecode(key []byte, src []byte) []byte {
-	block, _ := aes.NewCipher(key)
-	blockmode := cipher.NewCBCDecrypter(block, key)
-	blockmode.CryptBlocks(src, src)
-	src = unpadding(src)
-	return src
+	stream := cipher.NewCFBDecrypter(block, iv)
+
+	stream.XORKeyStream(ciphertext, ciphertext)
+
+	return ciphertext, true
 }

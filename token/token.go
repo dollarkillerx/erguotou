@@ -10,6 +10,7 @@ import (
 	"errors"
 	"github.com/dollarkillerx/erguotou"
 	"github.com/dollarkillerx/erguotou/cache"
+	"github.com/dollarkillerx/erguotou/clog"
 	"github.com/dollarkillerx/erguotou/util"
 	"time"
 )
@@ -67,8 +68,13 @@ func (t *token) GeneraJwtToken(payload *JwtPayload) (string, error) {
 
 	head64 := util.Base64URLEncode(head)
 	body64 := util.Base64URLEncode(body)
-
-	footer := util.Base64URLEncode(util.AESEncode([]byte(t.key), []byte(head64+body64)))
+	byt, b := util.AESEncrypt([]byte(t.key), []byte(head64+body64))
+	if !b {
+		ec := errors.New("编码失败")
+		clog.PrintWa(ec)
+		return "", ec
+	}
+	footer := util.Base64URLEncode(byt)
 
 	token := head64 + "." + body64 + "." + footer
 
