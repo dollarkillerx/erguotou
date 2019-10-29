@@ -51,17 +51,39 @@ func NewJwt() *JwtPayload {
 	}
 }
 
+// 判断token 是否存在
+func (t *token) Existence(payload *JwtPayload) bool {
+	body, e := erguotou.Jsonp.Marshal(payload)
+	if e != nil {
+		return false
+	}
+	kes := util.Md5Encode(string(body))
+	return cache.Exis(kes)
+}
+
 // 生成token
 func (t *token) GeneraJwtToken(payload *JwtPayload) (string, error) {
+	body, e := erguotou.Jsonp.Marshal(payload)
+	if e != nil {
+		return "", e
+	}
+	kes := util.Md5Encode(string(body))
+
+	get, b := cache.GetEx(kes)
+	if b {
+		// 如果存在 就删除当前的
+		e := cache.SetWithExpire(get.(string), "", time.Microsecond)
+		if e != nil {
+			return "", e
+		}
+	}
+
+	// 如果不存在
 	header := &JwtHeader{
 		Alg:  "ase128",
 		Type: "Rijndael",
 	}
 	head, e := erguotou.Jsonp.Marshal(header)
-	if e != nil {
-		return "", e
-	}
-	body, e := erguotou.Jsonp.Marshal(payload)
 	if e != nil {
 		return "", e
 	}
@@ -81,6 +103,10 @@ func (t *token) GeneraJwtToken(payload *JwtPayload) (string, error) {
 	// 存储到内存
 	cacheKey := t.getCacheKey(token)
 	e = cache.SetWithExpire(cacheKey, payload, payload.TimeOut)
+	if e != nil {
+		return "", e
+	}
+	e = cache.SetWithExpire(kes, token, payload.TimeOut)
 	return token, e
 }
 
