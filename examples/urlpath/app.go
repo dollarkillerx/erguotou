@@ -18,7 +18,6 @@ func main() {
 
 	}).Name("cs")
 
-
 	app.Get("/pc/:id/:cs", func(ctx *erguotou.Context) {
 
 	}).Name("pc")
@@ -32,5 +31,5 @@ func main() {
 		ctx.HTML(200, "/user/hello.html")
 	})
 
-	app.Run(erguotou.SetHost(":8085"),erguotou.SetDebug(true))
+	app.Run(erguotou.SetHost(":8085"), erguotou.SetDebug(true))
 }
