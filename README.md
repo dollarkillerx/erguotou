@@ -3,8 +3,8 @@
 
 erguotou 二锅头 基于fasthttp的轻量级web框架
 
-[中文文档](https://erguotou.dollarkiller.com/)
-https://erguotou.dollarkiller.com/
+### [中文文档](https://www.dollarkiller.com/erguotou/view/index.html)
+https://www.dollarkiller.com/erguotou/view/index.html
 
 ### 入门
 - [安装](#安装)
