@@ -36,46 +36,54 @@ func (r *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *Route
 	}
 }
 
-func (r *RouterGroup) Get(relativePath string, handlers ...HandlerFunc) {
+func (r *RouterGroup) Get(relativePath string, handlers ...HandlerFunc) *urlp {
 	url := HttpSplice(r.basePath, relativePath)
 	handle := append(r.Handlers, handlers...)
 	r.handle("GET", url, handle)
+	return &urlp{url: url}
 }
 
-func (r *RouterGroup) Post(relativePath string, handlers ...HandlerFunc) {
+func (r *RouterGroup) Post(relativePath string, handlers ...HandlerFunc) *urlp {
 	url := HttpSplice(r.basePath, relativePath)
 	handle := append(r.Handlers, handlers...)
 	r.handle("POST", url, handle)
+	return &urlp{url: url}
+
 }
 
-func (r *RouterGroup) Delete(relativePath string, handlers ...HandlerFunc) {
+func (r *RouterGroup) Delete(relativePath string, handlers ...HandlerFunc) *urlp {
 	url := HttpSplice(r.basePath, relativePath)
 	handle := append(r.Handlers, handlers...)
 	r.handle("DELETE", url, handle)
+	return &urlp{url: url}
 }
 
-func (r *RouterGroup) Put(relativePath string, handlers ...HandlerFunc) {
+func (r *RouterGroup) Put(relativePath string, handlers ...HandlerFunc) *urlp {
 	url := HttpSplice(r.basePath, relativePath)
 	handle := append(r.Handlers, handlers...)
 	r.handle("PUT", url, handle)
+	return &urlp{url: url}
 }
 
-func (r *RouterGroup) Patch(relativePath string, handlers ...HandlerFunc) {
+func (r *RouterGroup) Patch(relativePath string, handlers ...HandlerFunc) *urlp {
 	url := HttpSplice(r.basePath, relativePath)
 	handle := append(r.Handlers, handlers...)
 	r.handle("PATCH", url, handle)
+	return &urlp{url: url}
 }
 
-func (r *RouterGroup) Head(relativePath string, handlers ...HandlerFunc) {
+func (r *RouterGroup) Head(relativePath string, handlers ...HandlerFunc) *urlp {
 	url := HttpSplice(r.basePath, relativePath)
 	handle := append(r.Handlers, handlers...)
 	r.handle("HEAD", url, handle)
+	return &urlp{url: url}
 }
 
-func (r *RouterGroup) Options(relativePath string, handlers ...HandlerFunc) {
+func (r *RouterGroup) Options(relativePath string, handlers ...HandlerFunc) *urlp {
 	url := HttpSplice(r.basePath, relativePath)
 	handle := append(r.Handlers, handlers...)
 	r.handle("OPTIONS", url, handle)
+	return &urlp{url: url}
 }
 
 // 完全注册路由

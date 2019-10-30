@@ -22,4 +22,3 @@ func SuperRand() string {
 
 	return encode
 }
-

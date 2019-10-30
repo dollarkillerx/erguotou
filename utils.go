@@ -89,4 +89,3 @@ func (u *Utils) Sha256Encode(str string) string {
 	s := hex.EncodeToString(sum256[:])
 	return s
 }
-

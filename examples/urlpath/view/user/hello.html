@@ -1,0 +1,19 @@
+{{define  "/user/hello.html"}}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+    {{.c | add}}  1
+    <br>
+    {{urlpath "cs"}}  2
+    <br>
+    {{urlpath "pc"}}   3
+    <br>
+    {{urlpath "pc" "cs" "fr"}}  4
+    </body>
+    </html>
+
+{{end}}

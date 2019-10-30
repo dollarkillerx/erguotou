@@ -18,6 +18,7 @@ type delims struct {
 }
 
 type HtmlTemplate struct {
+	mu            sync.Mutex
 	delims        *delims          // 左右的left
 	FuncMap       template.FuncMap // func map
 	Path          string           // path 路径
@@ -38,7 +39,15 @@ func (h *HtmlTemplate) SetDelims(left, right string) {
 }
 
 func (h *HtmlTemplate) SetFuncMap(funcMap template.FuncMap) {
-	h.FuncMap = funcMap
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	if h.FuncMap == nil {
+		h.FuncMap = funcMap
+	} else {
+		for k, v := range funcMap {
+			h.FuncMap[k] = v
+		}
+	}
 }
 
 // 显示html

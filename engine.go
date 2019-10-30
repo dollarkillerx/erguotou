@@ -31,6 +31,8 @@ func New() *Engine {
 		Html:   &HtmlTemplate{},
 	}
 	eng.RouterGroup.engine = eng
+	// 注册反向路由解析
+	eng.SetFuncMap(template.FuncMap{"urlpath": urlpath})
 	return eng
 }
 

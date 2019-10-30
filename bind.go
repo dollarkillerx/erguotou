@@ -9,6 +9,7 @@ package erguotou
 import (
 	"errors"
 	"github.com/dollarkillerx/erguotou/fasthttp"
+	"gopkg.in/go-playground/validator.v9"
 	"reflect"
 	"strconv"
 	"strings"
@@ -20,15 +21,33 @@ func (c *Context) BindValue(obj interface{}) error {
 }
 
 func (c *Context) BindFrom(obj interface{}) error {
-	return bindFormPost(c.Ctx, obj)
+	err := bindFormPost(c.Ctx, obj)
+	if err != nil {
+		return err
+	}
+	// 进行validate 验证
+	validate := validator.New()
+	return validate.Struct(obj)
 }
 
 func (c *Context) BindJson(obj interface{}) error {
-	return bindJson(c.Ctx, obj)
+	err := bindJson(c.Ctx, obj)
+	if err != nil {
+		return err
+	}
+	// 进行validate 验证
+	validate := validator.New()
+	return validate.Struct(obj)
 }
 
 func (c *Context) BindGet(obj interface{}) error {
-	return bindFormGet(c.Ctx, obj)
+	err := bindFormGet(c.Ctx, obj)
+	if err != nil {
+		return err
+	}
+	// 进行validate 验证
+	validate := validator.New()
+	return validate.Struct(obj)
 }
 
 func bind(req *fasthttp.RequestCtx, obj interface{}) error {
