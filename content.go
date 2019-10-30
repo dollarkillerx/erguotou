@@ -48,6 +48,11 @@ func (c *Context) String(code int, msg string) (int, error) {
 	return c.Ctx.WriteString(msg)
 }
 
+// 获取header
+func (c *Context) Header(key string) string {
+	return string(c.Ctx.Request.Header.Peek(key))
+}
+
 // 返回json
 func (c *Context) Json(code int, msg interface{}) (int, error) {
 	c.Ctx.SetStatusCode(code)
