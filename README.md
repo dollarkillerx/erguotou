@@ -15,7 +15,7 @@ https://www.dollarkiller.com/erguotou/view/index.html
     - [路径中参数](#路径中参数)
     - [Get参数](#Get参数)
     - [POST参数](#POST参数)
-    - 高数缓存(见网页文档)
+    - 高速缓存(见网页文档)
     - Token(见网页文档)
     - Validate(见网页文档)
     - 反向解析(见网页文档)
